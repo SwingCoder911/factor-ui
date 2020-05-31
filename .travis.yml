@@ -1,26 +1,24 @@
 dist: trusty
 language: node_js
 node_js:
-- "stable"
+- stable
 before_script:
 - npm install
 script:
 - npm run build
 deploy:
-  tag: next
-  on:
-    branch: master
-  provider: npm
-  email: $NPM_EMAIL
-  api_key: $NPM_AUTH_TOKEN
-deploy:
   provider: s3
-  access_key_id: $AWS_ACCESS_ID
-  secret_access_key: $AWS_SECRET_ID
-  bucket: 'factor-ui'
+  access_key_id: "$AWS_ACCESS_ID"
+  secret_access_key: "$AWS_SECRET_ID"
+  bucket: factor-ui
   local_dir: dist
   skip_cleanup: true
   on:
     branch: master
 after_deploy:
-  - travis-ci-cloudfront-invalidation -a $AWS_ACCESS_ID -s $AWS_SECRET_ID -c $CF_ID -i '/*' -b $TRAVIS_BRANCH -p $TRAVIS_PULL_REQUEST
+- travis-ci-cloudfront-invalidation -a $AWS_ACCESS_ID -s $AWS_SECRET_ID -c $CF_ID
+  -i '/*' -b $TRAVIS_BRANCH -p $TRAVIS_PULL_REQUEST
+env:
+  global:
+  - secure: hWI/20xOJLVTZgIqXC12i7jcpwTl1opc+0bJ3zRGY3tGsfP1GVIqVSRmHtyYeOsYLhmtncTzKrSf1zkbl1EBOmR9E8IlbU0/s/aDFM7CiCLma2rW4QyKkR6u12a31Z4GoPLv9KZAe5GGn1TW6Oeu3oKYc4aC0Mwk3IgOXXCfbV73zn8jaQi+OwRSN5CbE47MciQMMznVJJFMdObSiuBICsjmkRWOfVQ63U6R0lAYv4sQn0emC3i5XwuJVFq1i+fOtHmgZmj+CUGj3v5InUdfnGziwm/w17eFr09oGE3qEIpHau8ow6MGU4Ph9gmR6zt1VpT4eggb6vxZNt451jmhKjtIjIH6iBs0K2CDVp0tCn18kRTyHpiPGLlNVT6kaBVwPPc/+Vzt0kcCT4V9Tt+VGvVJvw3Cvq07McnwbdLIi611lF9dxliZNsWpFPsFHJpbnn9Kp8yIxXGUo0MxiDw6AxeldAINqrT0b0e28W1lHXB7IvNO/EycUyOI/C+GYQjKJ/RNSrSZS4XVFk7vCIaQVwBuAYP9h5peyGfdtDLctbvQrQIjJf9RtUiEVycze3ee3d2hk3ntHMmagI/TGWaLZMQ1VIPZxzveH4WhgJFPBxIsW2bPPM0UF4QYNSvr7WK4ZGaCuvJT5FjqRN8xfszwYsUIqk2q4f67jeJA8LPiexw=
+  - secure: DcuJzevWZ4IEMopcqS7eFNLdO5VGFqCXOvgX4VaJFlbp9va0Oznb/iMgxnSSMGLrREQ7RDg2KBFW1qKqskNfFNCIl0z/vYTjKkrerCDhAfWa7Y9huveIASSj1oUeVm8MKbdNVwRl90kxwRM7tAHBGqazLwtf1wugMaRGHignKA1MTyhftm+eZMeVbELfyf/7uFhBZsd+SG+Nn/0zQmwjh/lph3eZ44zKQu1UI61KkZ4+owT6fZoawAyNoDejm8Mca/X6azFfIxsmq1sIO55VvwXdLSnSRB2NI4c5uERoJ3zor8rEAlfLzJtZcnBL5uUV3Xpj7domdzUVCKDOG2Rufa598wt/MEY42RoG4fUeYvO9ZY8gsYmVOwin96C5mtuBrgzhxhYguMMkKvKFuSd2ler4sARrSGV61zSgVMiK6Corc5OAsQHcdS3WZUsM+79pefeoWRy3f68DzAfD7p7eI7xFoEo5kxNUM1l1O2HJZgKvtglokMOx+K2E5VpKGOwCm0TOCW4btjd65QEAwKc0OFup11RAfp4UzjM/5it109JC8q3iYMSwKLUoq2dnzgRj1etMM3SmqC3zYC+tpywWpnsEqgY5mWwhKlIkrZ1FqnfuRFiwHePlFOdcSF1XD82y4yNO7D4m5HG4iMCX8UAuXDv1aGnCLw0MvLyvMpImnnw=
