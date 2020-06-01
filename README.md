@@ -63,10 +63,24 @@ This works the same with each of the different templates: FactorBlockTemplate, F
 
 #### Api
 
-| Property         | Type                      | Description                                                                  |
-| ---------------- | ------------------------- | ---------------------------------------------------------------------------- |
-| searchBarHandler | Function \| (value) => {} | Handler function for whatever is returned in the header search bar on update |
-| searchBarLabel   | String                    | Default placeholder text for the search bar                                  |
+| Property        | Type   | Description                                 |
+| --------------- | ------ | ------------------------------------------- |
+| searchBarConfig | Object | Object of configurations for the search bar |
+
+searchBarConfig
+
+```
+{
+  handler: [Function] // Function for handling input submit
+  onKeyUp: [Function] // Function for handling input "keyup" event
+  onDropdownClicked: [Function(item)] // Function for handling when dropdown event item clicked
+  onClearQuery: [Function] // Function for handling what happens when 'x' is clicked in search box
+  label: [String] // String that acts like a placeholder when text is not entered in box
+  value: [String] // Value that input starts out with
+  suggestions: [Array({label: 'text', ...})] // List of items that would go in the suggestions list.
+                                                Label is necessary for this list as it is the display text for the item.
+}
+```
 
 #### Slots
 
