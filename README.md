@@ -142,10 +142,12 @@ Slots:
 
 - Links:
 
-```<FactorFooter>
-      <ul class="footerlinks" slot="links">
-        <!-- Insert links -->
-      </ul>
+```
+<FactorFooter>
+  <ul class="footerlinks" slot="links">
+    <!-- Insert links -->
+  </ul>
+</FactorFooter>
 ```
 
 #### FactorHeader
@@ -162,27 +164,30 @@ Slots:
 
 - Logo:
 
-```<FactorHeader>
-      <img class="header" slot="logo" />
-      </FactorHeader>
+```
+<FactorHeader>
+  <img class="header" slot="logo" />
+</FactorHeader>
 ```
 
 - Nav:
 
-```<FactorHeader>
-      <ul class="nav" slot="nav">
-        <!-- Insert nav items -->
-      </ul>
-      </FactorHeader>
+```
+<FactorHeader>
+  <ul class="nav" slot="nav">
+    <!-- Insert nav items -->
+  </ul>
+</FactorHeader>
 ```
 
 - Profile:
 
-```<FactorHeader>
-     <div class="profile" slot="profile">
-     <!-- Insert profile content -->
-     </div>
-      </FactorHeader>
+```
+<FactorHeader>
+  <div class="profile" slot="profile">
+    <!-- Insert profile content -->
+  </div>
+</FactorHeader>
 ```
 
 #### FactorIcon
@@ -210,20 +215,22 @@ Slots:
 
 - Header:
 
-```<FactorPanel>
-     <div class="header" slot="header">
-     <!-- Insert header content -->
-     </div>
-      </FactorPanel>
+```
+<FactorPanel>
+  <div class="header" slot="header">
+    <!-- Insert header content -->
+  </div>
+</FactorPanel>
 ```
 
 - Content:
 
-```<FactorPanel>
-     <div class="content" slot="content">
-     <!-- Insert 'content' content -->
-     </div>
-      </FactorPanel>
+```
+<FactorPanel>
+  <div class="content" slot="content">
+    <!-- Insert 'content' content -->
+  </div>
+</FactorPanel>
 ```
 
 #### FactorSearchBar
