@@ -1,6 +1,6 @@
 {
   "name": "@mozilla/factor-ui",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Templates and components to guide internal applications designs to Mozilla",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,7 +9,7 @@
     "lint": "vue-cli-service lint",
     "test": "vue-cli-service test:unit --verbose",
     "build": "npm run build:wc && npm run build:lib:t && npm run build:lib:c",
-    "build:wc": "env NODE_FACTOR_WC=true vue-cli-service build --target wc --name factor-components 'src/components/*.vue'",
+    "build:wc": "env NODE_FACTOR_WC=true vue-cli-service build --target wc --name factor-components 'src/components/**/*.vue'",
     "build:lib:c": "vue-cli-service build --target lib --mode components --name components src/components.js",
     "build:lib:t": "vue-cli-service build --target lib --name factor src/index.js"
   },

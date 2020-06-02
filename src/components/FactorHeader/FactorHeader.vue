@@ -33,7 +33,7 @@
   </header>
 </template>
 <script>
-import FactorSearchBar from '@/components/FactorSearchBar.vue';
+import FactorSearchBar from '@/components/FactorSearchBar';
 
 export default {
   name: 'FactorHeader',

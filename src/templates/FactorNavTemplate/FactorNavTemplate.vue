@@ -31,8 +31,8 @@
   </div>
 </template>
 <script>
-import FactorHeader from '@/components/FactorHeader.vue';
-import FactorFooter from '@/components/FactorFooter.vue';
+import FactorHeader from '@/components/FactorHeader';
+import FactorFooter from '@/components/FactorFooter';
 
 export default {
   name: 'FactorNavTemplate',

@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-import FactorPanel from '@/components/FactorPanel.vue';
+import FactorPanel from '@/components/FactorPanel';
 
 export default {
   name: 'FlowLayoutExample',

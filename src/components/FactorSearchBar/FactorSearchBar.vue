@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import FactorIcon from '@/components/FactorIcon.vue';
+import FactorIcon from '@/components/FactorIcon';
 
 export default {
   name: 'FactorSearchBar',
