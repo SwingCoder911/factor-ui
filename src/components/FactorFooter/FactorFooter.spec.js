@@ -10,11 +10,9 @@ describe('FactorFooter', () => {
   it('receives slot nav', () => {
     const wrapper = mount(FactorFooter, {
       slots: {
-        ['footer-links']: `<p>footer-links</p>`,
+        ['links']: `<p>links</p>`,
       },
     });
-    expect(wrapper.vm.$slots['footer-links'][0].children[0].text).toEqual(
-      'footer-links',
-    );
+    expect(wrapper.vm.$slots['links'][0].children[0].text).toEqual('links');
   });
 });

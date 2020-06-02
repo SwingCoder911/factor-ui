@@ -50,11 +50,6 @@ export default {
   components: {
     FactorBlockTemplate
   },
-  data () {
-    return {
-      value: 0
-    }
-  }
 }
 </script>
 ```
@@ -103,3 +98,150 @@ searchBarConfig
 ### Nav Template
 
 ![Nav Template](./src/assets/template3-layout.jpg)
+
+## Components
+
+### Include
+
+Include this in whichever VueJS component you wish to use the template.
+
+In component import
+
+```
+<template>
+  <FactorComponent />
+</template>
+
+<script>
+import { FactorComponent } from '@mozilla/factor-ui';
+import '@mozilla/factor-ui/dist/lib/factor.css';
+
+export default {
+  components: {
+    FactorComponent
+  },
+}
+</script>
+```
+
+### Components
+
+| Name            | Description                                          |
+| --------------- | ---------------------------------------------------- |
+| FactorFooter    | Footer component for layout                          |
+| FactorHeader    | Header component for layout                          |
+| FactorIcon      | Component to serve up all icons in templates         |
+| FactorPanel     | Component to contain any block contents in templates |
+| FactorSearchBar | Component for search bar in header and anywhere else |
+
+### Properties/Slots
+
+#### FactorFooter
+
+Slots:
+
+- Links:
+
+```<FactorFooter>
+      <ul class="footerlinks" slot="links">
+        <!-- Insert links -->
+      </ul>
+```
+
+#### FactorHeader
+
+Properties:
+
+| Name            | Type/Default  | Description                              |
+| --------------- | ------------- | ---------------------------------------- |
+| hideSearchBar   | Boolean/false | determine whether to show the search bar |
+| searchBarConfig | Object/null   | Config object for FactorSearchBar        |
+| noLogo          | Boolean/false | Determine whether to hide logo           |
+
+Slots:
+
+- Logo:
+
+```<FactorHeader>
+      <img class="header" slot="logo" />
+      </FactorHeader>
+```
+
+- Nav:
+
+```<FactorHeader>
+      <ul class="nav" slot="nav">
+        <!-- Insert nav items -->
+      </ul>
+      </FactorHeader>
+```
+
+- Profile:
+
+```<FactorHeader>
+     <div class="profile" slot="profile">
+     <!-- Insert profile content -->
+     </div>
+      </FactorHeader>
+```
+
+#### FactorIcon
+
+Properties:
+
+| Name   | Type/Default | Description                    |
+| ------ | ------------ | ------------------------------ |
+| id     | String       | Name of icon to use            |
+| width  | Number       | The size in width of the icon  |
+| height | Number       | The size in height of the icon |
+
+#### FactorPanel
+
+Properties:
+
+| Name         | Type/Default  | Description                                            |
+| ------------ | ------------- | ------------------------------------------------------ |
+| fullContent  | Boolean/false | Determine whether should have inner padding            |
+| fullOnMobile | Boolean/false | Determine whether panel should be full width on mobile |
+| title        | String/''     | Title of panel                                         |
+| hideContent  | Boolean/false | Determine whether to hide content inside panel         |
+
+Slots:
+
+- Header:
+
+```<FactorPanel>
+     <div class="header" slot="header">
+     <!-- Insert header content -->
+     </div>
+      </FactorPanel>
+```
+
+- Content:
+
+```<FactorPanel>
+     <div class="content" slot="content">
+     <!-- Insert 'content' content -->
+     </div>
+      </FactorPanel>
+```
+
+#### FactorSearchBar
+
+Properties:
+
+| Name              | Type/Default | Description                         |
+| ----------------- | ------------ | ----------------------------------- |
+| searchBarHandler  | Function     | Handler for when input is submitted |
+| searchBarLabel    | String/''    | Placeholder text for input          |
+| searchBarValue    | String/''    | Initial value for input             |
+| searchBarDropdown | Array/\[\]]  | Array of drop down list items       |
+
+Events:
+
+| Name                        | Description                                |
+| --------------------------- | ------------------------------------------ |
+| keyup                       | Handler for every "keyup" on input         |
+| clearQuery                  | Placeholder text for input                 |
+| closeSearchBar              | event on submit wihout value               |
+| search-bar-dropdown-clicked | Event when item is clicked or 'enter'ed on |
