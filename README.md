@@ -252,3 +252,25 @@ Events:
 | clearQuery                  | Placeholder text for input                 |
 | closeSearchBar              | event on submit wihout value               |
 | search-bar-dropdown-clicked | Event when item is clicked or 'enter'ed on |
+
+## Styles
+
+### Colors
+
+| Name            | code    |
+| --------------- | ------- |
+| --gray-10       | #f9f9fa |
+| --gray-20       | #ededf0 |
+| --gray-30       | #d7d7db |
+| --gray-40       | #b1b1b3 |
+| --gray-50       | #737373 |
+| --gray-60       | #4a4a4f |
+| --blue-60       | #4a4a4f |
+| --green-80      | #006504 |
+| --white         | #fff    |
+| --black         | #000    |
+| --light-red     | #f5d8e1 |
+| --neon-red      | #ff0039 |
+| --duck-egg-blue | #f2fcfd |
+| --charcoal-gray | #38383d |
+| --true-green    | #12bc00 |
