@@ -1,43 +1,43 @@
 <template>
-  <FactorNavTemplate :searchBarConfig="searchBarConfig">
-    <SideNavExample slot="nav" />
+  <FactorBlockTemplate :searchBarConfig="searchBarConfig">
+    <NavExample slot="nav" />
     <ProfileExample slot="profile" />
-    <!-- <BlockLayoutExample slot="main" /> -->
-    <NavLayoutExample slot="main" />
-    <!-- <FooterLinksExample slot="footer-links" /> -->
-  </FactorNavTemplate>
+    <BlockLayoutExample slot="main" />
+    <!-- <NavLayoutExample slot="main" /> -->
+    <FooterLinksExample slot="footer-links" />
+  </FactorBlockTemplate>
 </template>
 
 <script>
-// import FactorBlockTemplate from './templates/FactorBlockTemplate';
+import FactorBlockTemplate from './templates/FactorBlockTemplate';
 // import FactorFlowTemplate from './templates/FactorFlowTemplate';
-import FactorNavTemplate from './templates/FactorNavTemplate';
+// import FactorNavTemplate from './templates/FactorNavTemplate';
 
 // Importing example components
-// import NavExample from '@/examples/NavExample.vue';
-import SideNavExample from '@/examples/SideNavExample.vue';
+import NavExample from '@/examples/NavExample.vue';
+// import SideNavExample from '@/examples/SideNavExample.vue';
 
 import ProfileExample from '@/examples/ProfileExample.vue';
-// import BlockLayoutExample from '@/examples/BlockLayoutExample.vue';
+import BlockLayoutExample from '@/examples/BlockLayoutExample.vue';
 // import FlowLayoutExample from '@/examples/FlowLayoutExample.vue';
-import NavLayoutExample from '@/examples/NavLayoutExample.vue';
-// import FooterLinksExample from '@/examples/FooterLinksExample.vue';
+// import NavLayoutExample from '@/examples/NavLayoutExample.vue';
+import FooterLinksExample from '@/examples/FooterLinksExample.vue';
 
 export default {
   name: 'App',
   components: {
     // FactorFlowTemplate,
-    // FactorBlockTemplate,
-    FactorNavTemplate,
+    FactorBlockTemplate,
+    // FactorNavTemplate,
 
     // Example components
-    // NavExample,
-    SideNavExample,
+    NavExample,
+    // SideNavExample,
     ProfileExample,
-    // BlockLayoutExample,
+    BlockLayoutExample,
     // FlowLayoutExample,
-    NavLayoutExample,
-    // FooterLinksExample,
+    // NavLayoutExample,
+    FooterLinksExample,
   },
   computed: {
     searchBarConfig() {
