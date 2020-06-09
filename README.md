@@ -277,6 +277,7 @@ Events:
 
 ### Icons
 
-![activity](./src/assets/svg/activity.svg)
-![at-sign](./src/assets/svg/at-sign.svg)
-![bell](./src/assets/svg/bell.svg)
+| --------------- | ------- | ------- | ------- |
+| ![activity](./src/assets/svg/activity.svg) | ![at-sign](./src/assets/svg/at-sign.svg) | ![bell](./src/assets/svg/bell.svg) | #f9f9fa |
+| --gray-20 | #ededf0 | #ededf0 | #ededf0 |
+| --gray-30 | #d7d7db | #d7d7db | #d7d7db |
