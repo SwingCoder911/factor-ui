@@ -274,3 +274,9 @@ Events:
 | --duck-egg-blue | #f2fcfd |
 | --charcoal-gray | #38383d |
 | --true-green    | #12bc00 |
+
+### Icons
+
+![activity](./src/assets/svg/activity.svg)
+![at-sign](./src/assets/svg/at-sign.svg)
+![bell](./src/assets/svg/bell.svg)
