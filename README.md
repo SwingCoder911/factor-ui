@@ -279,13 +279,13 @@ Events:
 
 <p align="center">
   <span>activity</span>
-  ![activity](./src/assets/svg/activity.svg)
+  <img src="./src/assets/svg/activity.svg">
 </p>
 <p align="center">
   <span>at-sign</span>
-  ![at-sign](./src/assets/svg/at-sign.svg)
+  <img src="./src/assets/svg/at-sign.svg">
 </p>
 <p align="center">
   <span>bell</span>
-  ![bell](./src/assets/svg/bell.svg)
+  <img src="./src/assets/svg/bell.svg">
 </p>
