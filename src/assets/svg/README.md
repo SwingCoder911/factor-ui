@@ -4,7 +4,7 @@
 
 ```
 <template>
-  <Icon id="[iconId]" width="[width]" height="[height]">
+  <FactorIcon id="[iconId]" width="[width]" height="[height]">
 </template>
 
 <script>
