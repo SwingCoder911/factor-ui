@@ -8,6 +8,14 @@ This will be a central repository for internally shared templates and components
 
 This project is intended to be a helpful "bootstrapped" kickstarter for all internal applications, providing out of the box internal themes and styles while allowing for flexibility to each individual application.
 
+## Travis CI
+
+### Adding a Secret
+
+```
+travis encrypt --add --com KEY=VALUE
+```
+
 ## Installation
 
 Run the following command in your terminal
