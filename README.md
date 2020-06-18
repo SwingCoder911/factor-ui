@@ -80,6 +80,7 @@ searchBarConfig
   onClearQuery: [Function] // Function for handling what happens when 'x' is clicked in search box
   label: [String] // String that acts like a placeholder when text is not entered in box
   value: [String] // Value that input starts out with
+  dropdownEnabled: [Boolean] // Value to enable dropdown or disable
   suggestions: [Array({label: 'text', ...})] // List of items that would go in the suggestions list.
                                                 Label is necessary for this list as it is the display text for the item.
 }

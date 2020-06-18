@@ -1,3 +1,5 @@
+@import './_variables.scss';
+
 /**
  * Styles for Grid Block Layout
  */
@@ -32,7 +34,9 @@
 }
 
 .block-template .f-main {
-  width: 74em;
+  @media (min-width: $largeWidth) {
+    width: $largeWidth;
+  }
   margin: 3em auto 1em;
 }
 

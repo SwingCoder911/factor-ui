@@ -12,10 +12,11 @@
             'with-dropdown': dropdownItems.length,
           }"
           name="query"
-          autocomplete="off"
-          ref="searchQueryField"
           v-model="searchQuery"
-          :placeholder="searchLabel"
+          class="search-bar__input"
+          ref="searchQueryField"
+          :placeholder="searchBarLabel"
+          :autocomplete="dropdownEnabled ? 'off' : 'on'"
           @keyup="handleKeyUp"
           @blur="onSearchQueryBlur"
           @focus="onSearchQueryFocus"
@@ -35,7 +36,10 @@
         </button>
       </div>
     </fieldset>
-    <ul class="search-bar__dropdown" v-if="dropdownItems.length">
+    <ul
+      class="search-bar__dropdown"
+      v-if="dropdownItems.length && dropdownEnabled"
+    >
       <li
         :class="{
           'dropdown-item': true,
@@ -64,6 +68,14 @@ export default {
     searchBarValue: {
       type: String,
       default: '',
+    },
+    searchBarDropdown: {
+      type: Array,
+      default: () => [],
+    },
+    dropdownEnabled: {
+      type: Boolean,
+      default: true,
     },
   },
   components: {

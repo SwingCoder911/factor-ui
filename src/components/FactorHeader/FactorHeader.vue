@@ -22,6 +22,62 @@
           @factor:search:clear="factorSearchClear"
           @factor:search-suggestions:clicked="factorSearchSuggestionsClicked"
         />
+      </a>
+    </div>
+    <div class="f-header__column">
+      <FactorSearchBar
+        class="f-header__search desktop"
+        :searchBarHandler="searchBarHandler"
+        :searchBarLabel="searchBarLabel"
+        :searchBarValue="searchBarValue"
+        :searchBarDropdown="searchBarSuggestions"
+        :dropdownEnabled="searchBarDropdownEnabled"
+        @keyup="searchBarKeyup"
+        v-on:search-bar-dropdown-clicked="searchBarDropdownClicked"
+        v-on:clear-query="searchBarClearQuery"
+        v-if="!hideSearchBar"
+      />
+      <FactorShowMore
+        :buttonText="showMoreButtonText"
+        :alternateButtonText="showMoreAlternateButtonText"
+        buttonClass="top-bar__search-toggle"
+        :closeWhenClickedOutside="true"
+        ref="showMoreSearch"
+        :buttonTextVisuallyHidden="true"
+        :moveFocus="false"
+      >
+        <template slot="overflow">
+          <FactorSearchBar
+            class="f-header__search mobile"
+            :searchBarHandler="searchBarHandler"
+            :searchBarLabel="searchBarLabel"
+            :searchBarValue="searchBarValue"
+            :searchBarDropdown="searchBarSuggestions"
+            :dropdownEnabled="searchBarDropdownEnabled"
+            @keyup="searchBarKeyup"
+            v-on:search-bar-dropdown-clicked="searchBarDropdownClicked"
+            v-on:clear-query="searchBarClearQuery"
+            v-if="!hideSearchBar"
+          />
+          <!-- <SearchForm
+            :searchFormHandler="searchFormHandler"
+            :searchFormLabel="fluent('search_input', 'placeholder')"
+            class="search-form--small hide-desktop"
+            id="mobile-search"
+            v-on:close-search-form="closeMobileSearchForm()"
+          ></SearchForm> -->
+        </template>
+        <template slot="button-content">
+          <FactorIcon id="search" :width="20" :height="20" />
+        </template>
+      </FactorShowMore>
+    </div>
+    <div class="f-header__column">
+      <nav class="f-nav">
+        <slot name="nav" />
+      </nav>
+      <div class="f-profile">
+        <slot name="profile" />
       </div>
       <div class="f-header__column">
         <nav class="f-nav">
@@ -36,10 +92,12 @@
 </template>
 <script>
 import FactorSearchBar from '@/components/FactorSearchBar';
+import FactorShowMore from '@/components/FactorShowMore';
+import FactorIcon from '@/components/FactorIcon';
 
 export default {
   name: 'FactorHeader',
-  components: { FactorSearchBar },
+  components: { FactorSearchBar, FactorShowMore, FactorIcon },
   props: {
     hideSearchBar: {
       type: Boolean,
@@ -88,24 +146,38 @@ export default {
       }
       return this.searchBarValue;
     },
+    searchBarDropdownEnabled() {
+      if (this.searchBarConfig.dropdownEnabled === undefined) {
+        return true;
+      }
+      return this.searchBarConfig.dropdownEnabled;
+    },
   },
 };
 </script>
 <style lang="scss">
-@import '../../shared/styles/_base.scss';
 @import '../../shared/styles/_variables.scss';
 
 .f-header {
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 5em;
-  background-color: $white;
-  border-bottom: 1px solid $gray-30;
+  display: flex;
+  justify-content: flex-end;
+
+  @media (min-width: $mediumWidth) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 6em;
+  }
+
+  background-color: var(--white);
+  border-bottom: 1px solid var(--gray-30);
 
   & #{&}__column {
     &:first-child {
       display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-right: auto;
     }
     &:nth-child(2) {
       display: flex;
@@ -118,6 +190,32 @@ export default {
       flex-direction: row;
       justify-content: flex-end;
       align-items: center;
+    }
+  }
+
+  & #{&}__search.desktop {
+    display: none;
+
+    @media (min-width: 57.5em) {
+      display: block;
+    }
+  }
+
+  & #{&}__search.mobile {
+    padding: 1em;
+    max-width: none;
+    background: var(--white);
+    margin-bottom: 1em;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 5em;
+    z-index: var(--layerTopBar);
+    box-shadow: var(--shadowCard);
+    display: block;
+
+    @media (min-width: 57.5em) {
+      display: none;
     }
   }
 
@@ -134,12 +232,20 @@ export default {
   }
 }
 
+.top-bar__search-toggle {
+  border: 0;
+  background-color: transparent;
+  padding: 0.75em;
+  line-height: 0;
+}
+.top-bar__search-toggle[aria-expanded='true'] {
+  background-color: var(--gray-20);
+}
+
 .f-nav {
-  flex: 1;
 }
 
 .f-profile {
   height: 100%;
-  flex: 0.2;
 }
 </style>
