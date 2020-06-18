@@ -263,6 +263,21 @@ Events:
 
 ## Styles
 
+### Standards
+
+This project is built in scss inside single file Vue components. The scss portions of the component import styles from /src/shard/styles.
+We implement the CSS naming structure: BEM (Block Element Modifier) http://getbem.com/introduction/
+
+The way to think about how naming should be considered with BEM is consider the component block that this class is in, say nav. Then consider which specific element is being addressed, say list item. Then consider if there is some small style modification say horizontal.
+
+In this case, we might build a css name: nav**list-item--horizontal. This is a loose structure. {block}**{element}--{modifier} are all suggested pieces.
+
+- {block}--{modifier}
+- {block}\_\_{element}
+- {element}--{modifier}
+
+These are all available methods of using the standard.
+
 ### Colors
 
 | Name            | code    |
