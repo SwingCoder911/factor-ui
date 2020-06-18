@@ -270,7 +270,7 @@ We implement the CSS naming structure: BEM (Block Element Modifier) http://getbe
 
 The way to think about how naming should be considered with BEM is consider the component block that this class is in, say nav. Then consider which specific element is being addressed, say list item. Then consider if there is some small style modification say horizontal.
 
-In this case, we might build a css name: nav**list-item--horizontal. This is a loose structure. {block}**{element}--{modifier} are all suggested pieces.
+In this case, we might build a css name: nav\_\_list-item--horizontal. This is a loose structure. {block}\_\_{element}--{modifier} are all suggested pieces.
 
 - {block}--{modifier}
 - {block}\_\_{element}
