@@ -1,5 +1,5 @@
 <template>
-  <img src="@/assets/images/mozilla-m.svg" class="dino-type" :alt="altText" />
+  <img src="@/assets/svg/mozilla-m.svg" class="dino-type" :alt="altText" />
 </template>
 <script>
 export default {

@@ -2,7 +2,7 @@ export function getStrings(stringSet, field) {
   if (stringSet === null || !field) {
     return '';
   }
-  if (!stringSet.hasOwnProperty(field)) {
+  if (stringSet[field] === undefined) {
     return '';
   }
   return stringSet[field];

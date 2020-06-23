@@ -8,9 +8,10 @@
     "test:unit": "vue-cli-service test:unit --no-cache",
     "lint": "vue-cli-service lint",
     "test": "vue-cli-service test:unit --verbose",
-    "build": "npm run build:wc && npm run build:lib",
-    "build:wc": "env NODE_FACTOR_WC=true vue-cli-service build --target wc --name moz-components './src/components/**/*.vue'",
-    "build:lib": "vue-cli-service build --target lib --name factor src/index.js"
+    "build": "npm run build:wc && npm run build:lib:t && npm run build:lib:c",
+    "build:wc": "env NODE_FACTOR_WC=true vue-cli-service build --target wc --name factor-components 'src/components/**/*.vue'",
+    "build:lib:c": "vue-cli-service build --target lib --mode components --name components src/components/index.js",
+    "build:lib:t": "vue-cli-service build --target lib --name factor src/index.js"
   },
   "dependencies": {
     "core-js": "^3.6.4",

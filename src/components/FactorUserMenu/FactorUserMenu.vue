@@ -2,38 +2,38 @@
   <div class="user-menu" ref="userMenuEl">
     <div class="user-menu__header">
       <button class="user-menu__close-avatar" type="button">
-        <span class="visually-hidden">{{ fluent('user-menu_close') }}</span>
+        <span class="visually-hidden">{{
+          getComponentText('closeMenuHidden')
+        }}</span>
         <FactorUserPicture
-          v-if="scope.isReady"
+          v-if="avatar.loaded"
           :avatar="{
-            picture: user.picture.value,
-            username: user.primaryUsername.value,
+            picture: avatar.imageUrl,
+            username: avatar.username,
           }"
           :size="40"
           :pictureSize="100"
-          :showLabel="scope.isStaff"
+          :showStaffIcon="avatar.isStaff"
         ></FactorUserPicture>
         <FactorUserPicture
           v-else
           :size="40"
           :pictureSize="100"
-          :showLabel="scope.isStaff"
+          :showStaffIcon="avatar.isStaff"
         ></FactorUserPicture>
       </button>
       <div class="user-menu__name">
         <RouterLink
-          v-if="scope.isReady"
+          v-if="avatar.loaded"
           :to="{
             name: 'Profile',
-            params: { username: user.primaryUsername.value },
+            params: { username: avatar.username },
           }"
         >
           <span class="user-menu__header-name"
-            >{{ user.firstName.value }} {{ user.lastName.value }}</span
+            >{{ avatar.firstName }} {{ avatar.lastName }}</span
           >
-          <span class="user-menu__header-email">{{
-            user.primaryEmail.value
-          }}</span>
+          <span class="user-menu__header-email">{{ avatar.primaryEmail }}</span>
         </RouterLink>
       </div>
       <button
@@ -45,63 +45,62 @@
       </button>
     </div>
     <ul class="user-menu__items">
-      <li>
-        <RouterLink
-          v-if="scope.isReady"
-          id="link-usermenu-my-profile"
-          :to="{
-            name: 'Profile',
-            params: { username: user.primaryUsername.value },
-          }"
-        >
-          <span>{{ fluent('user-menu_my-profile') }}</span>
-          <FactorIcon id="user" :width="24" :height="24" />
+      <li v-for="(linkItem, idx) in menuItems" :key="idx">
+        <RouterLink v-if="linkItem.hasOwnProperty('link')" :to="linkItem.link">
+          <span>{{ linkItem.text }}</span>
+          <FactorIcon :id="linkItem.icon" :width="24" :height="24" />
         </RouterLink>
-      </li>
-      <li>
-        <a href="https://sso.mozilla.com" id="link-usermenu-sso-dashboard">
-          <span>{{ fluent('user-menu_dashboard') }}</span>
-          <FactorIcon id="dashboard" :width="24" :height="24" />
+        <a v-else :href="linkItem.url">
+          <span>{{ linkItem.text }}</span>
+          <FactorIcon :id="linkItem.icon" :width="24" :height="24" />
         </a>
-      </li>
-      <li>
-        <a
-          href="https://sso.mozilla.com/notifications"
-          id="link-usermenu-sso-dashboard"
-        >
-          <span>{{ fluent('user-menu_notifications') }}</span>
-          <FactorIcon id="bell" :width="24" :height="24" />
-        </a>
-      </li>
-      <li>
-        <span class="user-menu__faux-link">
-          <span>{{ fluent('user-menu_auto-login') }}</span>
-          <FactorIcon id="sliders" :width="24" :height="24" />
-        </span>
       </li>
     </ul>
-    <a href="/_/logout" class="user-menu__log-out">
-      <span>{{ fluent('user-menu_logout') }}</span>
+    <a href="" class="user-menu__log-out">
+      <span>{{ getComponentText('userMenuLogout') }}</span>
       <FactorIcon id="log-out" :width="24" :height="24" />
     </a>
   </div>
 </template>
 
 <script>
-import FactorModal from '@/components/FactorModal/FactorModal';
+import { getStrings } from '@/shared/utils/stringUtils';
 
-import FactorIcon from '@/components/FactorIcon/FactorIcon';
-import FactorUserPicture from '@/components/FactorUserPicture/FactorUserPicture';
+import { FactorModal, FactorIcon, FactorUserPicture } from '@/components';
 
 export default {
+  props: {
+    strings: {
+      type: Object,
+      default: () => ({
+        closeMenuHidden: '',
+        userMenuMyProfile: '',
+        userMenuDashboard: '',
+        userMenuNotifications: '',
+        userMenuLogout: '',
+      }),
+    },
+    avatar: {
+      type: Object,
+      default: () => ({
+        imageUrl: '',
+        username: '',
+        isStaff: false,
+        loaded: false,
+        firstName: '',
+        lastName: '',
+        primaryEmail: '',
+      }),
+    },
+  },
   mounted() {
     if (matchMedia('(min-width: 50em)').matches === false) {
-      Modal.methods.preventBackgroundScrolling();
+      FactorModal.methods.preventBackgroundScrolling();
     }
   },
   destroyed() {
     if (matchMedia('(min-width: 50em)').matches === false) {
-      Modal.methods.enableBackgroundScrolling();
+      FactorModal.methods.enableBackgroundScrolling();
     }
   },
   components: {
@@ -109,8 +108,37 @@ export default {
     FactorUserPicture,
   },
   computed: {
-    user() {
-      return this.$store.state.user;
+    menuItems() {
+      let menuItemSet = !this.avatar.loaded
+        ? []
+        : [
+            {
+              link: {
+                name: 'Profile',
+                params: { username: this.avatar.primaryEmail },
+              },
+              text: this.getComponentText('userMenuMyProfile'),
+              icon: 'user',
+            },
+          ];
+      menuItemSet = menuItemSet.concat([
+        {
+          url: 'https://sso.mozilla.com',
+          text: this.getComponentText('userMenuDashboard'),
+          icon: 'dashboard',
+        },
+        {
+          url: 'https://sso.mozilla.com/notifications',
+          text: this.getComponentText('userMenuNotifications'),
+          icon: 'dashboard',
+        },
+      ]);
+      return menuItemSet;
+    },
+  },
+  methods: {
+    getComponentText(field) {
+      return getStrings(this.strings, field);
     },
   },
 };

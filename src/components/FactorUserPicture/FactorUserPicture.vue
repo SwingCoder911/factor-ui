@@ -3,33 +3,37 @@
     <img
       v-if="src"
       ref="img"
-      :class="cls"
+      :class="imageClass"
       :src="src"
       alt=""
       :width="size"
       role="presentation"
       aria-hidden="true"
     />
-    <FactorTinyStaffIcon v-if="showLabel" :size="dinoTypeSize" />
+    <FactorTinyStaffIcon v-if="showStaffIcon" :size="iconSize" />
   </div>
 </template>
 
 <script>
 import { avatarUrl, generateIdenticon } from '@/shared/utils/avatars';
-import FactorTinyStaffIcon from '@/components/FactorTinyStaffIcon/FactorTinyStaffIcon';
+import { FactorTinyStaffIcon } from '@/components';
 
 export default {
   props: {
-    size: Number,
     avatar: {
       type: Object,
       default: () => {
         return { picture: '', username: 'dino' };
       },
     },
-    cls: String,
+    ownPicture: {
+      type: Boolean,
+      default: false,
+    },
+    size: Number,
+    imageClass: String,
     pictureSize: Number,
-    showLabel: Boolean,
+    showStaffIcon: Boolean,
   },
   components: {
     FactorTinyStaffIcon,
@@ -45,17 +49,17 @@ export default {
   methods: {
     updateSize() {
       if (this.size <= 40) {
-        this.dinoTypeSize = 'small';
+        this.iconSize = 'small';
         this.slot = 40;
       } else if (this.size <= 100) {
-        this.dinoTypeSize = 'medium';
+        this.iconSize = 'medium';
         this.slot = 100;
       } else {
-        this.dinoTypeSize = 'large';
+        this.iconSize = 'large';
         this.slot = 264;
       }
       this.slot = this.pictureSize || this.slot;
-      this.modifier = `user-picture--${this.dinoTypeSize}`;
+      this.modifier = `user-picture--${this.iconSize}`;
     },
     updateUserPicture() {
       this.updateSize();
@@ -79,16 +83,9 @@ export default {
         ) {
           this.src = this.avatar.picture;
         } else {
-          this.src = avatarUrl(
-            this.avatar.picture,
-            this.slot,
-            this.ownPicture(),
-          );
+          this.src = avatarUrl(this.avatar.picture, this.slot, this.ownPicture);
         }
       }
-    },
-    ownPicture() {
-      return this.avatar.username === this.$store.state.scope.username;
     },
   },
   created() {
@@ -97,7 +94,7 @@ export default {
   data() {
     return {
       src: '',
-      dinoTypeSize: 'small',
+      iconSize: 'small',
       slot: 40,
       class: 'user-picture--40',
       modifier: '',

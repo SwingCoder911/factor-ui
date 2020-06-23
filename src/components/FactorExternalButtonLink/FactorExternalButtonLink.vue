@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 /* Adjust button style to have a link with optional icons as an external link. */
 .button--link {
   width: max-content;

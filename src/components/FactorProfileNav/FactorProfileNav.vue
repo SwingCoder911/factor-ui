@@ -1,42 +1,46 @@
 <template>
   <div class="f-pn">
-    <template v-if="scope.isLoggedIn">
+    <template v-if="showMenu">
       <FactorShowMore
-        :buttonText="getStrings(strings, 'buttonText')"
-        :alternateButtonText="getStrings(strings, 'alternateButton')"
+        :buttonText="getComponentText('buttonText')"
+        :alternateButtonText="getComponentText('alternateButton')"
         buttonClass="top-bar__user-menu-toggle"
         :closeWhenClickedOutside="true"
         :buttonTextVisuallyHidden="true"
       >
         <template slot="overflow">
-          <FactorUserMenu></FactorUserMenu>
+          <FactorUserMenu
+            :avatar="avatar"
+            :loginLink="loginLink"
+            :strings="strings"
+          ></FactorUserMenu>
         </template>
         <template slot="button-content">
           <FactorUserPicture
-            v-if="scope.isReady"
+            v-if="avatar.loaded"
             :avatar="{
-              picture: user.picture.value,
-              username: user.primaryUsername.value,
+              picture: avatar.imageUrl,
+              username: avatar.username,
             }"
             :size="40"
             :pictureSize="100"
-            :showLabel="scope.isStaff"
+            :showStaffIcon="avatar.isStaff"
           ></FactorUserPicture>
           <FactorUserPicture
             v-else
             :size="40"
             :pictureSize="100"
-            :showLabel="scope.isStaff"
+            :showStaffIcon="avatar.isStaff"
           ></FactorUserPicture>
         </template>
       </FactorShowMore>
     </template>
     <FactorExternalButtonLink
       v-else
-      href="/_/login"
+      :href="loginLink"
       class="top-bar__login"
       iconRight="chevron-right"
-      :text="fluent('log_in')"
+      :text="getComponentText('loginText')"
     ></FactorExternalButtonLink>
   </div>
 </template>
@@ -57,18 +61,39 @@ export default {
     FactorUserPicture,
     FactorExternalButtonLink,
   },
-  methods: {
-    getStrings,
-  },
   props: {
+    loginLink: String,
+    avatar: {
+      type: Object,
+      default: () => ({
+        imageUrl: '',
+        username: '',
+        isStaff: false,
+        loaded: false,
+        firstName: '',
+        lastName: '',
+        primaryEmail: '',
+      }),
+    },
     strings: {
       type: Object,
-      default: {
+      default: () => ({
         buttonText: '',
         alternateButtonText: '',
-      },
+        loginText: '',
+      }),
+    },
+    showMenu: {
+      type: Boolean,
+      default: false,
     },
   },
+  methods: {
+    getComponentText(field) {
+      return getStrings(this.strings, field);
+    },
+  },
+  computed: {},
 };
 </script>
 <style lang="scss">
