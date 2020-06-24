@@ -65,10 +65,10 @@
 
 <script>
 import { getStrings } from '@/shared/utils/stringUtils';
-
 import { FactorModal, FactorIcon, FactorUserPicture } from '@/components';
 
 export default {
+  name: 'FactorUserMenu',
   props: {
     strings: {
       type: Object,

@@ -10,6 +10,7 @@
 import FactorIcon from '@/components/FactorIcon/FactorIcon';
 
 export default {
+  name: 'FactorExternalButtonLink',
   components: { FactorIcon },
   props: {
     href: String,

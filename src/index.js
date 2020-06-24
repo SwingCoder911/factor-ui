@@ -1,17 +1,38 @@
-import FactorBlockTemplate from './templates/FactorBlockTemplate';
-import FactorFlowTemplate from './templates/FactorFlowTemplate';
-import FactorFooter from './components/FactorFooter';
-import FactorHeader from './components/FactorHeader';
-import FactorIcon from './components/FactorIcon';
-import FactorPanel from './components/FactorPanel';
-import FactorSearchBar from './components/FactorSearchBar';
+import {
+  FactorBlockTemplate,
+  FactorFlowTemplate,
+  FactorNavTemplate,
+} from './templates';
+
+import {
+  FactorExternalButtonLink,
+  FactorFooter,
+  FactorHeader,
+  FactorIcon,
+  FactorModal,
+  FactorPanel,
+  FactorProfileNav,
+  FactorSearchBar,
+  FactorShowMore,
+  FactorTinyStaffIcon,
+  FactorUserMenu,
+  FactorUserPicture,
+} from './components';
 
 export {
   FactorBlockTemplate,
   FactorFlowTemplate,
+  FactorNavTemplate,
+  FactorExternalButtonLink,
   FactorFooter,
   FactorHeader,
   FactorIcon,
+  FactorModal,
   FactorPanel,
+  FactorProfileNav,
   FactorSearchBar,
+  FactorShowMore,
+  FactorTinyStaffIcon,
+  FactorUserMenu,
+  FactorUserPicture,
 };

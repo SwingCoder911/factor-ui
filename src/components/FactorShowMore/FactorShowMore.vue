@@ -4,6 +4,7 @@
       'show-more': true,
       'show-more--transition': transition,
       'show-more--expanded': isExpanded,
+      'show-more--only-mobile': onlyMobile,
     }"
   >
     <slot name="base"> </slot>
@@ -59,10 +60,6 @@
 export default {
   name: 'FactorShowMore',
   props: {
-    buttonText: String,
-    alternateButtonText: String,
-    buttonClass: String,
-    transition: Boolean,
     closeWhenClickedOutside: {
       type: Boolean,
       default: false,
@@ -83,6 +80,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    onlyMobile: {
+      type: Boolean,
+      default: false,
+    },
+    buttonText: String,
+    alternateButtonText: String,
+    buttonClass: String,
+    transition: Boolean,
     updateIndicator: String,
   },
   methods: {
@@ -162,7 +167,19 @@ export default {
 
 .show-more {
   position: relative;
+
+  &.show-more--only-mobile {
+    .show-more__button {
+      font: inherit;
+      display: block;
+
+      @media (min-width: $mediumWidth) {
+        display: none;
+      }
+    }
+  }
 }
+
 .show-more--transition .show-more__overflow--enter-active,
 .show-more--transition .show-more__overflow--leave-active {
   transition: opacity 0.5s;
@@ -175,11 +192,6 @@ export default {
 
 .show-more__button {
   font: inherit;
-  display: block;
-
-  @media (min-width: $mediumWidth) {
-    display: none;
-  }
 }
 
 .show-more__button > svg,

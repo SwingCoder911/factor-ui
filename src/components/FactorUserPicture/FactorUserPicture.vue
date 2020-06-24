@@ -10,15 +10,22 @@
       role="presentation"
       aria-hidden="true"
     />
-    <FactorTinyStaffIcon v-if="showStaffIcon" :size="iconSize" />
+    <FactorIcon
+      v-if="showStaffIcon"
+      :width="8"
+      :height="8"
+      class="staff-icon"
+      id="mozilla-m"
+    />
   </div>
 </template>
 
 <script>
 import { avatarUrl, generateIdenticon } from '@/shared/utils/avatars';
-import { FactorTinyStaffIcon } from '@/components';
+import { FactorIcon } from '@/components';
 
 export default {
+  name: 'FactorUserPicture',
   props: {
     avatar: {
       type: Object,
@@ -36,7 +43,7 @@ export default {
     showStaffIcon: Boolean,
   },
   components: {
-    FactorTinyStaffIcon,
+    FactorIcon,
   },
   watch: {
     size() {
@@ -120,7 +127,7 @@ export default {
     object-fit: cover;
   }
 }
-.user-picture .dino-type {
+.user-picture .staff-icon {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -129,7 +136,7 @@ export default {
   width: 2.85em;
   height: 2.85em;
 }
-.user-picture--small .dino-type {
+.user-picture--small .staff-icon {
   width: 1em;
   height: 1em;
 }
@@ -137,7 +144,7 @@ export default {
   width: 6.25em;
   height: 6.25em;
 }
-.user-picture--medium .dino-type {
+.user-picture--medium .staff-icon {
   width: 2em;
   height: 2em;
 }
@@ -145,7 +152,7 @@ export default {
   width: 6.25em;
   height: 6.25em;
 }
-.user-picture--large .dino-type {
+.user-picture--large .staff-icon {
   width: 2em;
   height: 2em;
 }
@@ -154,7 +161,7 @@ export default {
     width: 18.75em;
     height: 18.75em;
   }
-  .user-picture--large .dino-type {
+  .user-picture--large .staff-icon {
     width: 5em;
     height: 5em;
   }

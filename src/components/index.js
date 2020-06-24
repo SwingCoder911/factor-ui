@@ -1,15 +1,15 @@
 import FactorExternalButtonLink from './FactorExternalButtonLink';
-import FactorFooter from './FactorFooter';
-import FactorHeader from './FactorHeader';
 import FactorIcon from './FactorIcon';
 import FactorModal from './FactorModal';
 import FactorPanel from './FactorPanel';
-import FactorProfileNav from './FactorProfileNav';
+import FactorTinyStaffIcon from './FactorTinyStaffIcon';
+import FactorUserPicture from './FactorUserPicture';
 import FactorSearchBar from './FactorSearchBar';
 import FactorShowMore from './FactorShowMore';
-import FactorTinyStaffIcon from './FactorTinyStaffIcon';
 import FactorUserMenu from './FactorUserMenu';
-import FactorUserPicture from './FactorUserPicture';
+import FactorHeader from './FactorHeader';
+import FactorFooter from './FactorFooter';
+import FactorProfileNav from './FactorProfileNav';
 
 export {
   FactorExternalButtonLink,

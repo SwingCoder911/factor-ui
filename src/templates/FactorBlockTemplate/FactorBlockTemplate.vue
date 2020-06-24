@@ -29,8 +29,7 @@
   </div>
 </template>
 <script>
-import FactorHeader from '@/components/FactorHeader';
-import FactorFooter from '@/components/FactorFooter';
+import { FactorHeader, FactorFooter } from '@/components';
 
 export default {
   name: 'FactorBlockTemplate',

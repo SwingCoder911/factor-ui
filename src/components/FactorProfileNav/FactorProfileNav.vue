@@ -55,6 +55,7 @@ import {
 import { getStrings } from '@/shared/utils/stringUtils';
 
 export default {
+  name: 'FactorProfileNav',
   components: {
     FactorShowMore,
     FactorUserMenu,
@@ -81,6 +82,11 @@ export default {
         buttonText: '',
         alternateButtonText: '',
         loginText: '',
+        closeMenuHidden: '',
+        userMenuMyProfile: '',
+        userMenuDashboard: '',
+        userMenuNotifications: '',
+        userMenuLogout: '',
       }),
     },
     showMenu: {

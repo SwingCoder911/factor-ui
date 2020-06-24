@@ -45,6 +45,7 @@
         ref="showMoreSearch"
         :buttonTextVisuallyHidden="true"
         :moveFocus="false"
+        :onlyMobile="true"
       >
         <template slot="overflow">
           <FactorSearchBar
@@ -59,13 +60,6 @@
             v-on:clear-query="searchBarClearQuery"
             v-if="!hideSearchBar"
           />
-          <!-- <SearchForm
-            :searchFormHandler="searchFormHandler"
-            :searchFormLabel="fluent('search_input', 'placeholder')"
-            class="search-form--small hide-desktop"
-            id="mobile-search"
-            v-on:close-search-form="closeMobileSearchForm()"
-          ></SearchForm> -->
         </template>
         <template slot="button-content">
           <FactorIcon id="search" :width="20" :height="20" />
@@ -91,9 +85,7 @@
   </div>
 </template>
 <script>
-import FactorSearchBar from '@/components/FactorSearchBar';
-import FactorShowMore from '@/components/FactorShowMore';
-import FactorIcon from '@/components/FactorIcon';
+import { FactorSearchBar, FactorShowMore, FactorIcon } from '@/components';
 
 export default {
   name: 'FactorHeader',
