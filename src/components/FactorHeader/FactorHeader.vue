@@ -107,6 +107,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    showMoreButtonText: {
+      type: String,
+      default: 'Button text',
+    },
+    showMoreAlternateButtonText: {
+      type: String,
+      default: 'Button text',
+    },
   },
   methods: {
     factorSearchSubmitted(queryObject) {
@@ -154,6 +162,7 @@ export default {
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  z-index: $layerTopBar;
 
   @media (min-width: $mediumWidth) {
     display: grid;
@@ -202,7 +211,7 @@ export default {
     left: 0;
     right: 0;
     top: 5em;
-    z-index: var(--layerTopBar);
+    z-index: $layerTopBar;
     box-shadow: var(--shadowCard);
     display: block;
 
@@ -238,6 +247,5 @@ export default {
 }
 
 .f-profile {
-  height: 100%;
 }
 </style>

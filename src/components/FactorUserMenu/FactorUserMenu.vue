@@ -23,18 +23,18 @@
         ></FactorUserPicture>
       </button>
       <div class="user-menu__name">
-        <RouterLink
+        <!-- TODO: fix the url for this -->
+        <!-- <RouterLink
           v-if="avatar.loaded"
           :to="{
             name: 'Profile',
             params: { username: avatar.username },
           }"
+        > -->
+        <span class="user-menu__header-name"
+          >{{ avatar.firstName }} {{ avatar.lastName }}</span
         >
-          <span class="user-menu__header-name"
-            >{{ avatar.firstName }} {{ avatar.lastName }}</span
-          >
-          <span class="user-menu__header-email">{{ avatar.primaryEmail }}</span>
-        </RouterLink>
+        <span class="user-menu__header-email">{{ avatar.primaryEmail }}</span>
       </div>
       <button
         class="user-menu__close-button"
@@ -46,10 +46,10 @@
     </div>
     <ul class="user-menu__items">
       <li v-for="(linkItem, idx) in menuItems" :key="idx">
-        <RouterLink v-if="linkItem.hasOwnProperty('link')" :to="linkItem.link">
+        <a v-if="linkItem.hasOwnProperty('link')" :href="linkItem.link">
           <span>{{ linkItem.text }}</span>
           <FactorIcon :id="linkItem.icon" :width="24" :height="24" />
-        </RouterLink>
+        </a>
         <a v-else :href="linkItem.url">
           <span>{{ linkItem.text }}</span>
           <FactorIcon :id="linkItem.icon" :width="24" :height="24" />

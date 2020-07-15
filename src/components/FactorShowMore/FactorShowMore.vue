@@ -39,8 +39,8 @@
         <span :class="`show-more__button-text${buttonTextClass}`">{{
           buttonText
         }}</span>
+        <slot name="button-content"></slot>
       </template>
-      <slot name="button-content"></slot>
     </button>
     <transition v-if="overflowBefore === false" name="show-more__overflow-">
       <div
@@ -166,7 +166,7 @@ export default {
 @import '../../shared/styles/_variables.scss';
 
 .show-more {
-  position: relative;
+  // position: relative;
 
   &.show-more--only-mobile {
     .show-more__button {

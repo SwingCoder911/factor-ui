@@ -103,16 +103,18 @@ export default {
 };
 </script>
 <style lang="scss">
+@import '../../shared/styles/_variables.scss';
+
 .top-bar__user-menu-toggle {
-  border: 0;
   background-color: transparent;
   padding: 1.6em;
+  border: none;
 }
 .top-bar__user-menu-toggle:hover {
   background-color: var(--gray-20);
 }
 .top-bar__user-menu-toggle img {
-  border-radius: var(--imageRadius);
+  border-radius: $imageRadius;
 }
 .top-bar__user-menu-toggle img,
 .top-bar__search-toggle svg {

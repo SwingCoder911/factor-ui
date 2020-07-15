@@ -143,9 +143,10 @@
 }
 .user-picture {
   position: relative;
+  color: var(--black);
 }
 .user-picture img {
-  border-radius: var(--imageRadius);
+  border-radius: 0.25em;
   max-height: 100%;
 }
 @supports ((-o-object-fit: cover) or (object-fit: cover)) {
@@ -287,7 +288,7 @@
   left: 0;
   right: 0;
   top: 5em;
-  z-index: var(--layerTopBar);
+  z-index: var(9);
   box-shadow: var(--shadowCard);
 }
 .search-bar .search-bar__dropdown {
@@ -322,9 +323,6 @@
   border-bottom: 1px solid var(--blue-60);
   border-left: 1px solid var(--blue-60);
   border-right: 1px solid var(--blue-60);
-}
-.show-more {
-  position: relative;
 }
 .show-more.show-more--only-mobile .show-more__button {
   font: inherit;
@@ -482,6 +480,7 @@ a.user-menu__log-out:hover {
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  z-index: 9;
   background-color: var(--white);
   border-bottom: 1px solid var(--gray-30);
 }
@@ -527,7 +526,7 @@ a.user-menu__log-out:hover {
   left: 0;
   right: 0;
   top: 5em;
-  z-index: var(--layerTopBar);
+  z-index: 9;
   box-shadow: var(--shadowCard);
   display: block;
 }
@@ -555,9 +554,6 @@ a.user-menu__log-out:hover {
 .top-bar__search-toggle[aria-expanded='true'] {
   background-color: var(--gray-20);
 }
-.f-profile {
-  height: 100%;
-}
 .f-footer {
   margin-top: 2em;
   background-color: var(--black);
@@ -566,15 +562,15 @@ a.user-menu__log-out:hover {
   padding: 2em 0;
 }
 .top-bar__user-menu-toggle {
-  border: 0;
   background-color: transparent;
   padding: 1.6em;
+  border: none;
 }
 .top-bar__user-menu-toggle:hover {
   background-color: var(--gray-20);
 }
 .top-bar__user-menu-toggle img {
-  border-radius: var(--imageRadius);
+  border-radius: 0.25em;
 }
 .top-bar__search-toggle svg,
 .top-bar__user-menu-toggle img {

@@ -176,9 +176,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../shared/styles/_base.scss';
 @import '../../shared/styles/_variables.scss';
-
 .search-bar {
   width: 100%;
   max-width: 31em;
@@ -266,8 +264,8 @@ export default {
     left: 0;
     right: 0;
     top: 5em;
-    z-index: $layerTopBar;
-    box-shadow: $shadowCard;
+    z-index: var($layerTopBar);
+    box-shadow: var(--shadowCard);
   }
 
   & #{&}__dropdown {

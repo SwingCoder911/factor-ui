@@ -84,10 +84,7 @@ export default {
         this.identicon = false;
         if (this.avatar.picture === 'empty:') {
           this.src = '';
-        } else if (
-          this.avatar.picture &&
-          this.avatar.picture.startsWith('data:')
-        ) {
+        } else if (this.avatar.picture) {
           this.src = this.avatar.picture;
         } else {
           this.src = avatarUrl(this.avatar.picture, this.slot, this.ownPicture);
@@ -112,13 +109,17 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../shared/styles/_variables.scss';
+
 .user-picture {
   position: relative;
+  color: var(--black);
 }
 .user-picture img {
-  border-radius: var(--imageRadius);
+  border-radius: $imageRadius;
   max-height: 100%;
 }
+
 @supports (object-fit: cover) {
   .user-picture img {
     width: 100%;
