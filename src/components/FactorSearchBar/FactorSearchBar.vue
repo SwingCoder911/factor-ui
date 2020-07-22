@@ -11,7 +11,7 @@
           v-model="searchQuery"
           class="search-bar__input"
           ref="searchQueryField"
-          :placeholder="searchBarLabel"
+          :placeholder="searchLabel"
           autocomplete="off"
           @keyup="handleKeyUp"
           @blur="onSearchQueryBlur"
@@ -123,6 +123,7 @@ export default {
       } else {
         this.$emit('close-search-bar');
       }
+      this.$emit('factor:search', { search: this.searchQuery });
       this.searchBarHandler(this.searchQuery);
     },
     handleKeyUp(e) {
@@ -146,10 +147,14 @@ export default {
     searchBarValue(value) {
       this.searchQuery = value;
     },
+    searchBarLabel(value) {
+      this.searchLabel = value;
+    },
   },
   data() {
     return {
       searchQuery: this.searchBarValue,
+      searchLabel: this.searchBarLabel,
       focusedSuggestion: -1,
       dropdownItems: this.searchBarDropdown,
     };

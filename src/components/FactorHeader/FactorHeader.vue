@@ -13,8 +13,8 @@
       <FactorSearchBar
         class="f-header__search"
         :searchBarHandler="searchBarHandler"
-        :searchBarLabel="searchBarLabel"
-        :searchBarValue="searchBarValue"
+        :searchBarLabel="searchBarLabelDisplay"
+        :searchBarValue="searchBarValueDisplay"
         :searchBarDropdown="searchBarSuggestions"
         @keyup="searchBarKeyup"
         v-on:search-bar-dropdown-clicked="searchBarDropdownClicked"
@@ -45,7 +45,15 @@ export default {
     },
     searchBarConfig: {
       type: Object,
-      default: null,
+      default: () => ({}),
+    },
+    searchBarLabel: {
+      type: String,
+      default: '',
+    },
+    searchBarValue: {
+      type: String,
+      default: '',
     },
     noLogo: {
       type: Boolean,
@@ -54,10 +62,10 @@ export default {
   },
   methods: {
     searchBarHandler(value) {
-      if (!this.searchBarConfig.handler) {
-        return;
+      this.$emit('factor:header-search', { search: value });
+      if (typeof this.searchBarConfig.handler === 'function') {
+        this.searchBarConfig.handler(value);
       }
-      this.searchBarConfig.handler(value);
     },
     searchBarKeyup(e) {
       if (!this.searchBarConfig.onKeyUp) {
@@ -82,17 +90,17 @@ export default {
     hasLogoSlot() {
       return !!this.$slots['logo'];
     },
-    searchBarLabel() {
-      if (!this.searchBarConfig.label) {
+    searchBarLabelDisplay() {
+      if (!this.searchBarLabel) {
         return '';
       }
-      return this.searchBarConfig.label;
+      return this.searchBarLabel;
     },
-    searchBarValue() {
-      if (!this.searchBarConfig.value) {
+    searchBarValueDisplay() {
+      if (!this.searchBarValue) {
         return '';
       }
-      return this.searchBarConfig.value;
+      return this.searchBarValue;
     },
     searchBarSuggestions() {
       if (!this.searchBarConfig.suggestions) {
