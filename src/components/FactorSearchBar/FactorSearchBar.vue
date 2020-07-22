@@ -15,8 +15,8 @@
           v-model="searchQuery"
           class="search-bar__input"
           ref="searchQueryField"
-          :placeholder="searchBarLabel"
-          :autocomplete="dropdownEnabled ? 'off' : 'on'"
+          :placeholder="searchLabel"
+          autocomplete="off"
           @keyup="handleKeyUp"
           @blur="onSearchQueryBlur"
           @focus="onSearchQueryFocus"
@@ -133,7 +133,8 @@ export default {
       } else {
         this.$emit('factor:search:close');
       }
-      this.$emit('factor:search:submitted', { search: this.searchQuery });
+      this.$emit('factor:search', { search: this.searchQuery });
+      this.searchBarHandler(this.searchQuery);
     },
     handleKeyUp(e) {
       const updateSuggestions = (suggestions) => {

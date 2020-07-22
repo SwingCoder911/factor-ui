@@ -28,8 +28,8 @@
       <FactorSearchBar
         class="f-header__search desktop"
         :searchBarHandler="searchBarHandler"
-        :searchBarLabel="searchBarLabel"
-        :searchBarValue="searchBarValue"
+        :searchBarLabel="searchBarLabelDisplay"
+        :searchBarValue="searchBarValueDisplay"
         :searchBarDropdown="searchBarSuggestions"
         :dropdownEnabled="searchBarDropdownEnabled"
         @keyup="searchBarKeyup"
@@ -95,6 +95,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    searchBarConfig: {
+      type: Object,
+      default: () => ({}),
+    },
     searchBarLabel: {
       type: String,
       default: '',
@@ -117,8 +121,11 @@ export default {
     },
   },
   methods: {
-    factorSearchSubmitted(queryObject) {
-      this.$emit('factor:search:submitted', queryObject);
+    searchBarHandler(value) {
+      this.$emit('factor:header-search', { search: value });
+      if (typeof this.searchBarConfig.handler === 'function') {
+        this.searchBarConfig.handler(value);
+      }
     },
     factorSearchKeyup({ event, updateSuggestions }) {
       this.$emit('factor:search:keyup', { updateSuggestions, event });
