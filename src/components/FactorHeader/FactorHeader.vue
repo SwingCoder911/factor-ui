@@ -12,14 +12,14 @@
     <div class="f-header__column">
       <FactorSearchBar
         class="f-header__search"
-        :searchBarHandler="searchBarHandler"
+        v-if="!hideSearchBar"
         :searchBarLabel="searchBarLabelDisplay"
         :searchBarValue="searchBarValueDisplay"
         :searchBarDropdown="searchBarSuggestions"
         @keyup="searchBarKeyup"
-        v-on:search-bar-dropdown-clicked="searchBarDropdownClicked"
-        v-on:clear-query="searchBarClearQuery"
-        v-if="!hideSearchBar"
+        @factor:search:submitted="factorSearchSubmitted"
+        @factor:search:clear="factorSearchClear"
+        @factor:search-suggestions:clicked="searchBarDropdownClicked"
       />
     </div>
     <div class="f-header__column">
@@ -61,11 +61,8 @@ export default {
     },
   },
   methods: {
-    searchBarHandler(value) {
-      this.$emit('factor:header-search', { search: value });
-      if (typeof this.searchBarConfig.handler === 'function') {
-        this.searchBarConfig.handler(value);
-      }
+    factorSearchSubmitted(value) {
+      this.$emit('factor:search:submitted', { search: value });
     },
     searchBarKeyup(e) {
       if (!this.searchBarConfig.onKeyUp) {
@@ -79,11 +76,11 @@ export default {
       }
       this.searchBarConfig.onDropdownClicked(item);
     },
-    searchBarClearQuery() {
+    factorSearchClear() {
       if (!this.searchBarConfig.onClearQuery) {
         return;
       }
-      this.searchBarConfig.onClearQuery();
+      this.$emit('factor:search:clear');
     },
   },
   computed: {
@@ -112,13 +109,16 @@ export default {
 };
 </script>
 <style lang="scss">
+@import '../../shared/styles/_base.scss';
+@import '../../shared/styles/_variables.scss';
+
 .f-header {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 5em;
-  background-color: var(--white);
-  border-bottom: 1px solid var(--gray-30);
+  background-color: $white;
+  border-bottom: 1px solid $gray-30;
 
   & #{&}__column {
     &:first-child {
