@@ -7,16 +7,12 @@
         <input
           type="text"
           id="search-query"
-          :class="{
-            'search-bar__input': true,
-            'with-dropdown': dropdownItems.length,
-          }"
-          name="query"
-          v-model="searchQuery"
           class="search-bar__input"
-          ref="searchQueryField"
-          :placeholder="searchLabel"
+          name="query"
           autocomplete="off"
+          ref="searchQueryField"
+          v-model="searchQuery"
+          :placeholder="searchLabel"
           @keyup="handleKeyUp"
           @blur="onSearchQueryBlur"
           @focus="onSearchQueryFocus"
@@ -133,8 +129,7 @@ export default {
       } else {
         this.$emit('factor:search:close');
       }
-      this.$emit('factor:search', { search: this.searchQuery });
-      this.searchBarHandler(this.searchQuery);
+      this.$emit('factor:search:submitted', { search: this.searchQuery });
     },
     handleKeyUp(e) {
       const updateSuggestions = (suggestions) => {
@@ -167,7 +162,7 @@ export default {
       searchLabel: this.searchBarLabel,
       focusedSuggestion: -1,
       // TODO: suggestions https://github.com/vuejs/vue/issues/5443#issuecomment-380212050
-      dropdownItems: [],
+      dropdownItems: this.searchBarDropdown,
     };
   },
   mounted() {
@@ -177,7 +172,9 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../shared/styles/_base.scss';
 @import '../../shared/styles/_variables.scss';
+
 .search-bar {
   width: 100%;
   max-width: 31em;
@@ -265,20 +262,20 @@ export default {
     left: 0;
     right: 0;
     top: 5em;
-    z-index: var($layerTopBar);
-    box-shadow: var(--shadowCard);
+    z-index: $layerTopBar;
+    box-shadow: $shadowCard;
   }
 
   & #{&}__dropdown {
     position: absolute;
-    top: calc(100% - 2px);
-    left: 0;
-    right: 0;
+    top: calc(100% - 1px);
+    left: 2px;
+    right: 2px;
     background: $white;
     border-bottom: 1px solid $gray-30;
     border-left: 1px solid $gray-30;
     border-right: 1px solid $gray-30;
-    border-top: none;
+    border-top: 1px solid $white;
 
     .dropdown-item {
       padding: 0.5em 1.75em 0.5em 3em;

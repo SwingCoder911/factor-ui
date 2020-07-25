@@ -1,6 +1,23 @@
-$smallestWidth: 35e;
-$mediumWidth: 57.5em;
-$largeWidth: 74em;
+$gray-10: #f9f9fa;
+$gray-20: #ededf0;
+$gray-30: #d7d7db;
+$gray-40: #b1b1b3;
+$gray-50: #737373;
+$gray-60: #4a4a4f;
+$blue-60: #0060df;
+$green-80: #006504;
+$white: #fff;
+$black: #000;
+$light-red: #f5d8e1;
+$neon-red: #ff0039;
+$duck-egg-blue: #f2fcfd;
+$charcoal-gray: #38383d;
+$true-green: #12bc00;
+
+$lightBlue: #f2fcfd;
+$darkBlue: #073072;
+$transparentBlue: rgba(69, 161, 255, 0.54);
+$transparentWhite: rgba(255, 255, 255, 0.54);
 
 $layerOne: 1;
 $layerTwo: 2;
@@ -13,6 +30,9 @@ $layerPopover: 8;
 $layerTopBar: 9;
 $layerUserMenu: 10;
 $layerModal: 11;
+
+$shadowCard: 0 0.25em 0.25em 0 rgba(210, 210, 210, 0.5);
+$focusOutlineShadow: 0px 0 0 1px var($blue-60), 0 0 0 3px var($transparentBlue);
 
 $imageRadius: 0.25em;
 $formElementRadius: 0.25em;

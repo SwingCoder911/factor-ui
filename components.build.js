@@ -1,7 +1,7 @@
 // TODO: break this up: https://paulund.co.uk/create-config-files-for-vuejs
 
 const path = require('path');
-// const CopyPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 // vue.config.js
 
 module.exports = {
@@ -91,7 +91,11 @@ module.exports = {
         filename: 'js/[name].js',
         // path: path.resolve(__dirname, 'lib'),
       },
-      plugins: [],
+      plugins: [
+        new CopyPlugin({
+          patterns: [{ from: 'src/assets/svg', to: 'svg' }],
+        }),
+      ],
     };
     return defaultConfig;
   },

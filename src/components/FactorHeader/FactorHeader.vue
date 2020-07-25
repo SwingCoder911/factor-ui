@@ -26,16 +26,16 @@
     </div>
     <div class="f-header__column">
       <FactorSearchBar
-        class="f-header__search desktop"
-        :searchBarHandler="searchBarHandler"
+        class="f-header__search"
+        v-if="!hideSearchBar"
         :searchBarLabel="searchBarLabelDisplay"
         :searchBarValue="searchBarValueDisplay"
         :searchBarDropdown="searchBarSuggestions"
         :dropdownEnabled="searchBarDropdownEnabled"
         @keyup="searchBarKeyup"
-        v-on:search-bar-dropdown-clicked="searchBarDropdownClicked"
-        v-on:clear-query="searchBarClearQuery"
-        v-if="!hideSearchBar"
+        @factor:search:submitted="factorSearchSubmitted"
+        @factor:search:clear="factorSearchClear"
+        @factor:search-suggestions:clicked="searchBarDropdownClicked"
       />
       <FactorShowMore
         :buttonText="showMoreButtonText"
@@ -121,11 +121,8 @@ export default {
     },
   },
   methods: {
-    searchBarHandler(value) {
-      this.$emit('factor:header-search', { search: value });
-      if (typeof this.searchBarConfig.handler === 'function') {
-        this.searchBarConfig.handler(value);
-      }
+    factorSearchSubmitted(value) {
+      this.$emit('factor:search:submitted', { search: value });
     },
     factorSearchKeyup({ event, updateSuggestions }) {
       this.$emit('factor:search:keyup', { updateSuggestions, event });
@@ -134,6 +131,9 @@ export default {
       this.$emit('factor:search-suggestions:clicked', { item });
     },
     factorSearchClear() {
+      if (!this.searchBarConfig.onClearQuery) {
+        return;
+      }
       this.$emit('factor:search:clear');
     },
   },
@@ -163,22 +163,16 @@ export default {
 };
 </script>
 <style lang="scss">
+@import '../../shared/styles/_base.scss';
 @import '../../shared/styles/_variables.scss';
 
 .f-header {
   width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  z-index: $layerTopBar;
-
-  @media (min-width: $mediumWidth) {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 6em;
-  }
-
-  background-color: var(--white);
-  border-bottom: 1px solid var(--gray-30);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 5em;
+  background-color: $white;
+  border-bottom: 1px solid $gray-30;
 
   & #{&}__column {
     &:first-child {
