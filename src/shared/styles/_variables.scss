@@ -32,8 +32,7 @@ $layerUserMenu: 10;
 $layerModal: 11;
 
 $shadowCard: 0 0.25em 0.25em 0 rgba(210, 210, 210, 0.5);
-$focusOutlineShadow: 0px 0 0 1px var($blue-60), 0 0 0 3px var($transparentBlue);
-
+$focusOutlineShadow: 0 0 0 3px $transparentBlue;
 $imageRadius: 0.25em;
 $formElementRadius: 0.25em;
 $keyRadius: 0.25em;

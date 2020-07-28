@@ -1,5 +1,5 @@
 <template>
-  <form class="search-bar" @submit="handleSubmit" method="GET">
+  <form class="search-bar" @submit="handleSubmit" method="GET" tabindex="0">
     <fieldset>
       <legend class="visually-hidden">search</legend>
       <div class="search-bar__fields">
@@ -7,7 +7,10 @@
         <input
           type="text"
           id="search-query"
-          class="search-bar__input"
+          :class="{
+            'search-bar__input': true,
+            'with-dropdown': dropdownItems.length,
+          }"
           name="query"
           autocomplete="off"
           ref="searchQueryField"
@@ -61,10 +64,6 @@ export default {
     searchBarValue: {
       type: String,
       default: '',
-    },
-    searchBarDropdown: {
-      type: Array,
-      default: () => [],
     },
   },
   components: {
@@ -125,8 +124,12 @@ export default {
       this.$emit('factor:search:submitted', { search: this.searchQuery });
     },
     handleKeyUp(e) {
+      const updateSuggestions = (suggestions) => {
+        console.log('received suggestions: ', suggestions);
+        this.dropdownItems = suggestions;
+      };
       if (e.keyCode !== 13) {
-        this.$emit('keyup', e);
+        this.$emit('factor:search:keyup', { updateSuggestions, event: e });
       }
     },
     clearQuery() {
@@ -139,9 +142,6 @@ export default {
     },
   },
   watch: {
-    searchBarDropdown(value) {
-      this.dropdownItems = value;
-    },
     searchBarValue(value) {
       this.searchQuery = value;
     },
@@ -155,7 +155,7 @@ export default {
       searchLabel: this.searchBarLabel,
       focusedSuggestion: -1,
       // TODO: suggestions https://github.com/vuejs/vue/issues/5443#issuecomment-380212050
-      dropdownItems: this.searchBarDropdown,
+      dropdownItems: [],
     };
   },
   mounted() {
@@ -172,10 +172,12 @@ export default {
   width: 100%;
   max-width: 31em;
   position: relative;
+  margin: 0;
 
   fieldset {
     border: 0;
     padding: 0;
+    margin: 0;
   }
 
   & #{&}__fields {
@@ -197,6 +199,7 @@ export default {
     appearance: none;
     border-radius: 0;
     padding: 0.5em 1.75em 0.5em 3em;
+    outline: 0;
 
     &::placeholder {
       text-align: center;
@@ -258,14 +261,14 @@ export default {
 
   & #{&}__dropdown {
     position: absolute;
-    top: calc(100% - 1px);
-    left: 2px;
-    right: 2px;
+    top: calc(100% - 2px);
+    left: 0;
+    right: 0;
     background: $white;
     border-bottom: 1px solid $gray-30;
     border-left: 1px solid $gray-30;
     border-right: 1px solid $gray-30;
-    border-top: 1px solid $white;
+    border-top: none;
 
     .dropdown-item {
       padding: 0.5em 1.75em 0.5em 3em;
@@ -281,7 +284,8 @@ export default {
   }
 
   &:focus,
-  &:hover {
+  &:hover,
+  &:focus-within {
     .search-bar__input {
       border: 1px solid $blue-60;
     }

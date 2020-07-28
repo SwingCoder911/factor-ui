@@ -3,5 +3,10 @@
 module.exports = {
   default: {
     id: '',
+    stringify: () => '',
   },
+  process: () => ({
+    code: '',
+    stringify: () => '',
+  }),
 };

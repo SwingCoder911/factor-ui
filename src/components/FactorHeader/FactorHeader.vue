@@ -15,11 +15,10 @@
         v-if="!hideSearchBar"
         :searchBarLabel="searchBarLabelDisplay"
         :searchBarValue="searchBarValueDisplay"
-        :searchBarDropdown="searchBarSuggestions"
-        @keyup="searchBarKeyup"
+        @factor:search:keyup="factorSearchKeyup"
         @factor:search:submitted="factorSearchSubmitted"
         @factor:search:clear="factorSearchClear"
-        @factor:search-suggestions:clicked="searchBarDropdownClicked"
+        @factor:search-suggestions:clicked="factorSearchSuggestionsClicked"
       />
     </div>
     <div class="f-header__column">
@@ -43,10 +42,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    searchBarConfig: {
-      type: Object,
-      default: () => ({}),
-    },
     searchBarLabel: {
       type: String,
       default: '',
@@ -64,22 +59,13 @@ export default {
     factorSearchSubmitted(value) {
       this.$emit('factor:search:submitted', { search: value });
     },
-    searchBarKeyup(e) {
-      if (!this.searchBarConfig.onKeyUp) {
-        return;
-      }
-      this.searchBarConfig.onKeyUp(e);
+    factorSearchKeyup({ event, updateSuggestions }) {
+      this.$emit('factor:search:keyup', { updateSuggestions, event });
     },
-    searchBarDropdownClicked(item) {
-      if (!this.searchBarConfig.onDropdownClicked) {
-        return;
-      }
-      this.searchBarConfig.onDropdownClicked(item);
+    factorSearchSuggestionsClicked(item) {
+      this.$emit('factor:search-suggestions:clicked', { item });
     },
     factorSearchClear() {
-      if (!this.searchBarConfig.onClearQuery) {
-        return;
-      }
       this.$emit('factor:search:clear');
     },
   },
@@ -98,12 +84,6 @@ export default {
         return '';
       }
       return this.searchBarValue;
-    },
-    searchBarSuggestions() {
-      if (!this.searchBarConfig.suggestions) {
-        return [];
-      }
-      return this.searchBarConfig.suggestions;
     },
   },
 };
