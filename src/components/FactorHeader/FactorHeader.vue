@@ -30,12 +30,10 @@
         v-if="!hideSearchBar"
         :searchBarLabel="searchBarLabelDisplay"
         :searchBarValue="searchBarValueDisplay"
-        :searchBarDropdown="searchBarSuggestions"
-        :dropdownEnabled="searchBarDropdownEnabled"
-        @keyup="searchBarKeyup"
+        @factor:search:keyup="factorSearchKeyup"
         @factor:search:submitted="factorSearchSubmitted"
         @factor:search:clear="factorSearchClear"
-        @factor:search-suggestions:clicked="searchBarDropdownClicked"
+        @factor:search-suggestions:clicked="factorSearchSuggestionsClicked"
       />
       <FactorShowMore
         :buttonText="showMoreButtonText"
@@ -95,10 +93,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    searchBarConfig: {
-      type: Object,
-      default: () => ({}),
-    },
     searchBarLabel: {
       type: String,
       default: '',
@@ -131,9 +125,6 @@ export default {
       this.$emit('factor:search-suggestions:clicked', { item });
     },
     factorSearchClear() {
-      if (!this.searchBarConfig.onClearQuery) {
-        return;
-      }
       this.$emit('factor:search:clear');
     },
   },
@@ -152,12 +143,6 @@ export default {
         return '';
       }
       return this.searchBarValue;
-    },
-    searchBarDropdownEnabled() {
-      if (this.searchBarConfig.dropdownEnabled === undefined) {
-        return true;
-      }
-      return this.searchBarConfig.dropdownEnabled;
     },
   },
 };

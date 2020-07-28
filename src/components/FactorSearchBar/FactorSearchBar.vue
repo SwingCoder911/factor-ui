@@ -7,7 +7,10 @@
         <input
           type="text"
           id="search-query"
-          class="search-bar__input"
+          :class="{
+            'search-bar__input': true,
+            'with-dropdown': dropdownItems.length,
+          }"
           name="query"
           autocomplete="off"
           ref="searchQueryField"
@@ -64,14 +67,6 @@ export default {
     searchBarValue: {
       type: String,
       default: '',
-    },
-    searchBarDropdown: {
-      type: Array,
-      default: () => [],
-    },
-    dropdownEnabled: {
-      type: Boolean,
-      default: true,
     },
   },
   components: {
@@ -133,6 +128,7 @@ export default {
     },
     handleKeyUp(e) {
       const updateSuggestions = (suggestions) => {
+        console.log('received suggestions: ', suggestions);
         this.dropdownItems = suggestions;
       };
       if (e.keyCode !== 13) {
@@ -162,7 +158,7 @@ export default {
       searchLabel: this.searchBarLabel,
       focusedSuggestion: -1,
       // TODO: suggestions https://github.com/vuejs/vue/issues/5443#issuecomment-380212050
-      dropdownItems: this.searchBarDropdown,
+      dropdownItems: [],
     };
   },
   mounted() {
@@ -268,14 +264,14 @@ export default {
 
   & #{&}__dropdown {
     position: absolute;
-    top: calc(100% - 1px);
-    left: 2px;
-    right: 2px;
+    top: calc(100% - 2px);
+    left: 0;
+    right: 0;
     background: $white;
     border-bottom: 1px solid $gray-30;
     border-left: 1px solid $gray-30;
     border-right: 1px solid $gray-30;
-    border-top: 1px solid $white;
+    border-top: none;
 
     .dropdown-item {
       padding: 0.5em 1.75em 0.5em 3em;
