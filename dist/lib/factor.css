@@ -5,10 +5,12 @@
   width: 100%;
   max-width: 31em;
   position: relative;
+  margin: 0;
 }
 .search-bar fieldset {
   border: 0;
   padding: 0;
+  margin: 0;
 }
 .search-bar .search-bar__fields {
   display: flex;
@@ -28,9 +30,7 @@
   appearance: none;
   border-radius: 0;
   padding: 0.5em 1.75em 0.5em 3em;
-}
-.search-bar .search-bar__input::-webkit-input-placeholder {
-  text-align: center;
+  outline: 0;
 }
 .search-bar .search-bar__input::-moz-placeholder {
   text-align: center;
@@ -97,14 +97,14 @@
 }
 .search-bar .search-bar__dropdown {
   position: absolute;
-  top: calc(100% - 1px);
-  left: 2px;
-  right: 2px;
+  top: calc(100% - 2px);
+  left: 0;
+  right: 0;
   background: #fff;
   border-bottom: 1px solid #d7d7db;
   border-left: 1px solid #d7d7db;
   border-right: 1px solid #d7d7db;
-  border-top: 1px solid #fff;
+  border-top: none;
 }
 .search-bar .search-bar__dropdown .dropdown-item {
   padding: 0.5em 1.75em 0.5em 3em;
@@ -114,14 +114,17 @@
 .search-bar .search-bar__dropdown .dropdown-item:hover {
   background: #ededf0;
 }
+.search-bar:focus-within .search-bar__input,
 .search-bar:focus .search-bar__input,
 .search-bar:hover .search-bar__input {
   border: 1px solid #0060df;
 }
+.search-bar:focus-within button[type='submit'],
 .search-bar:focus button[type='submit'],
 .search-bar:hover button[type='submit'] {
   border-right: 1px solid #0060df;
 }
+.search-bar:focus-within .search-bar__dropdown,
 .search-bar:focus .search-bar__dropdown,
 .search-bar:hover .search-bar__dropdown {
   border-bottom: 1px solid #0060df;

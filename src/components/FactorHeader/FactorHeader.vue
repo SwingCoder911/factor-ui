@@ -22,54 +22,6 @@
           @factor:search:clear="factorSearchClear"
           @factor:search-suggestions:clicked="factorSearchSuggestionsClicked"
         />
-      </a>
-    </div>
-    <div class="f-header__column">
-      <FactorSearchBar
-        class="f-header__search"
-        v-if="!hideSearchBar"
-        :searchBarLabel="searchBarLabelDisplay"
-        :searchBarValue="searchBarValueDisplay"
-        @factor:search:keyup="factorSearchKeyup"
-        @factor:search:submitted="factorSearchSubmitted"
-        @factor:search:clear="factorSearchClear"
-        @factor:search-suggestions:clicked="factorSearchSuggestionsClicked"
-      />
-      <FactorShowMore
-        :buttonText="showMoreButtonText"
-        :alternateButtonText="showMoreAlternateButtonText"
-        buttonClass="top-bar__search-toggle"
-        :closeWhenClickedOutside="true"
-        ref="showMoreSearch"
-        :buttonTextVisuallyHidden="true"
-        :moveFocus="false"
-        :onlyMobile="true"
-      >
-        <template slot="overflow">
-          <FactorSearchBar
-            class="f-header__search mobile"
-            :searchBarHandler="searchBarHandler"
-            :searchBarLabel="searchBarLabel"
-            :searchBarValue="searchBarValue"
-            :searchBarDropdown="searchBarSuggestions"
-            :dropdownEnabled="searchBarDropdownEnabled"
-            @keyup="searchBarKeyup"
-            v-on:search-bar-dropdown-clicked="searchBarDropdownClicked"
-            v-on:clear-query="searchBarClearQuery"
-            v-if="!hideSearchBar"
-          />
-        </template>
-        <template slot="button-content">
-          <FactorIcon id="search" :width="20" :height="20" />
-        </template>
-      </FactorShowMore>
-    </div>
-    <div class="f-header__column">
-      <nav class="f-nav">
-        <slot name="nav" />
-      </nav>
-      <div class="f-profile">
-        <slot name="profile" />
       </div>
       <div class="f-header__column">
         <nav class="f-nav">
@@ -115,8 +67,8 @@ export default {
     },
   },
   methods: {
-    factorSearchSubmitted(value) {
-      this.$emit('factor:search:submitted', { search: value });
+    factorSearchSubmitted(queryObject) {
+      this.$emit('factor:search:submitted', queryObject);
     },
     factorSearchKeyup({ event, updateSuggestions }) {
       this.$emit('factor:search:keyup', { updateSuggestions, event });
