@@ -17,4 +17,5 @@ module.exports = {
     '.*\\.svg$': './src/test/mocks/svgMock.js',
   },
   testMatch: ['**/*.spec.(js|jsx|ts|tsx)'],
+  setupFilesAfterEnv: ['./src/test/jest.setup.js'],
 };

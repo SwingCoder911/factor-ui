@@ -13,7 +13,7 @@
       </div>
       <div class="f-header__column">
         <FactorSearchBar
-          class="f-header__search"
+          class="f-header__search desktop"
           v-if="!hideSearchBar"
           :searchBarLabel="searchBarLabelDisplay"
           :searchBarValue="searchBarValueDisplay"
@@ -22,6 +22,34 @@
           @factor:search:clear="factorSearchClear"
           @factor:search-suggestions:clicked="factorSearchSuggestionsClicked"
         />
+        <FactorShowMore
+          :buttonText="showMoreButtonText"
+          :alternateButtonText="showMoreAlternateButtonText"
+          buttonClass="top-bar__search-toggle"
+          :closeWhenClickedOutside="true"
+          ref="showMoreSearch"
+          :buttonTextVisuallyHidden="true"
+          :moveFocus="false"
+          :onlyMobile="true"
+        >
+          <template slot="overflow">
+            <FactorSearchBar
+              class="f-header__search mobile"
+              v-if="!hideSearchBar"
+              :searchBarLabel="searchBarLabelDisplay"
+              :searchBarValue="searchBarValueDisplay"
+              @factor:search:keyup="factorSearchKeyup"
+              @factor:search:submitted="factorSearchSubmitted"
+              @factor:search:clear="factorSearchClear"
+              @factor:search-suggestions:clicked="
+                factorSearchSuggestionsClicked
+              "
+            />
+          </template>
+          <template slot="button-content">
+            <FactorIcon id="search" :width="20" :height="20" />
+          </template>
+        </FactorShowMore>
       </div>
       <div class="f-header__column">
         <nav class="f-nav">
