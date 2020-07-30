@@ -3,17 +3,21 @@ import FactorHeader from './FactorHeader.vue';
 import {
   hideSearchBar,
   noLogo,
-  searchBarConfig,
+  searchBarLabel,
+  searchBarValue,
 } from '../../test/mocks/headerPropsMock';
+
+const defaultProps = {
+  searchBarLabel,
+  searchBarValue,
+  hideSearchBar,
+  noLogo,
+};
 
 describe('FactorHeader', () => {
   it('is a Vue instance', () => {
     const wrapper = mount(FactorHeader, {
-      propsData: {
-        searchBarConfig,
-        hideSearchBar,
-        noLogo,
-      },
+      propsData: defaultProps,
     });
     expect(wrapper.isVueInstance()).toBeTruthy();
   });
@@ -22,37 +26,33 @@ describe('FactorHeader', () => {
     const testText = 'searchBarLabel';
     const wrapper = mount(FactorHeader, {
       propsData: {
-        searchBarConfig: {
-          ...searchBarConfig,
-          label: testText,
-        },
-        hideSearchBar,
-        noLogo,
+        ...defaultProps,
+        searchBarLabel: testText,
       },
     });
-    expect(wrapper.vm.$props.searchBarConfig.label).toEqual(testText);
+    expect(wrapper.vm.$props.searchBarLabel).toEqual(testText);
   });
 
   it('receives hideSearchBar', () => {
+    const testHide = !hideSearchBar;
     const wrapper = mount(FactorHeader, {
       propsData: {
-        searchBarConfig,
-        hideSearchBar,
-        noLogo,
+        ...defaultProps,
+        hideSearchBar: testHide,
       },
     });
-    expect(wrapper.vm.$props.hideSearchBar).toEqual(hideSearchBar);
+    expect(wrapper.vm.$props.hideSearchBar).toEqual(testHide);
   });
 
   it('receives noLogo', () => {
+    const testNoLogo = !noLogo;
     const wrapper = mount(FactorHeader, {
       propsData: {
-        searchBarConfig,
-        hideSearchBar,
-        noLogo,
+        ...defaultProps,
+        noLogo: testNoLogo,
       },
     });
-    expect(wrapper.vm.$props.noLogo).toEqual(noLogo);
+    expect(wrapper.vm.$props.noLogo).toEqual(testNoLogo);
   });
 
   it('receives slot logo', () => {
@@ -61,9 +61,7 @@ describe('FactorHeader', () => {
       slots: {
         logo: `<img src='${testSrc}' />`,
       },
-      propsData: {
-        searchBarConfig,
-      },
+      propsData: defaultProps,
     });
     expect(wrapper.vm.$slots.logo[0].data.attrs.src).toEqual(testSrc);
   });
@@ -73,9 +71,7 @@ describe('FactorHeader', () => {
       slots: {
         nav: `<p>nav</p>`,
       },
-      propsData: {
-        searchBarConfig,
-      },
+      propsData: defaultProps,
     });
     expect(wrapper.vm.$slots.nav[0].children[0].text).toEqual('nav');
   });
@@ -85,9 +81,7 @@ describe('FactorHeader', () => {
       slots: {
         profile: `<p>profile</p>`,
       },
-      propsData: {
-        searchBarConfig,
-      },
+      propsData: defaultProps,
     });
     expect(wrapper.vm.$slots.profile[0].children[0].text).toEqual('profile');
   });

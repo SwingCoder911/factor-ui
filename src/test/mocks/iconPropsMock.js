@@ -1,5 +1,5 @@
 module.exports = {
-  id: 'id',
+  id: 'search',
   width: 16,
   height: 16,
 };

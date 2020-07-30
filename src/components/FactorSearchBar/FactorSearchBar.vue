@@ -1,5 +1,5 @@
 <template>
-  <form class="search-bar" @submit="handleSubmit" method="GET">
+  <form class="search-bar" @submit="handleSubmit" method="GET" tabindex="0">
     <fieldset>
       <legend class="visually-hidden">search</legend>
       <div class="search-bar__fields">
@@ -7,12 +7,15 @@
         <input
           type="text"
           id="search-query"
+          :class="{
+            'search-bar__input': true,
+            'with-dropdown': dropdownItems.length,
+          }"
           name="query"
-          v-model="searchQuery"
-          class="search-bar__input"
-          ref="searchQueryField"
-          :placeholder="searchBarLabel"
           autocomplete="off"
+          ref="searchQueryField"
+          v-model="searchQuery"
+          :placeholder="searchLabel"
           @keyup="handleKeyUp"
           @blur="onSearchQueryBlur"
           @focus="onSearchQueryFocus"
@@ -54,7 +57,6 @@ import FactorIcon from '@/components/FactorIcon';
 export default {
   name: 'FactorSearchBar',
   props: {
-    searchBarHandler: Function,
     searchBarLabel: {
       type: String,
       default: '',
@@ -62,10 +64,6 @@ export default {
     searchBarValue: {
       type: String,
       default: '',
-    },
-    searchBarDropdown: {
-      type: Array,
-      default: () => [],
     },
   },
   components: {
@@ -87,7 +85,7 @@ export default {
           if (this.focusedSuggestion > -1) {
             e.preventDefault();
             this.$emit(
-              'search-bar-dropdown-clicked',
+              'factor:search-suggestions:clicked',
               this.dropdownItems[this.focusedSuggestion],
             );
           } else if (this.focusedSuggestion == -1) {
@@ -121,37 +119,42 @@ export default {
       if (!this.searchQuery.length > 0) {
         this.$refs.searchQueryField.focus();
       } else {
-        this.$emit('close-search-bar');
+        this.$emit('factor:search:close');
       }
-      this.searchBarHandler(this.searchQuery);
+      this.$emit('factor:search:submitted', { search: this.searchQuery });
     },
     handleKeyUp(e) {
+      const updateSuggestions = (suggestions) => {
+        this.dropdownItems = suggestions;
+      };
       if (e.keyCode !== 13) {
-        this.$emit('keyup', e);
+        this.$emit('factor:search:keyup', { updateSuggestions, event: e });
       }
     },
     clearQuery() {
       this.searchQuery = '';
       this.$refs.searchQueryField.focus();
-      this.$emit('clear-query');
+      this.$emit('factor:search:clear');
     },
     onDropdownItemClick(item) {
-      this.$emit('search-bar-dropdown-clicked', item);
+      this.$emit('factor:search-suggestions:clicked', item);
     },
   },
   watch: {
-    searchBarDropdown(value) {
-      this.dropdownItems = value;
-    },
     searchBarValue(value) {
       this.searchQuery = value;
+    },
+    searchBarLabel(value) {
+      this.searchLabel = value;
     },
   },
   data() {
     return {
       searchQuery: this.searchBarValue,
+      searchLabel: this.searchBarLabel,
       focusedSuggestion: -1,
-      dropdownItems: this.searchBarDropdown,
+      // TODO: suggestions https://github.com/vuejs/vue/issues/5443#issuecomment-380212050
+      dropdownItems: [],
     };
   },
   mounted() {
@@ -161,14 +164,19 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../shared/styles/_base.scss';
+@import '../../shared/styles/_variables.scss';
+
 .search-bar {
   width: 100%;
   max-width: 31em;
   position: relative;
+  margin: 0;
 
   fieldset {
     border: 0;
     padding: 0;
+    margin: 0;
   }
 
   & #{&}__fields {
@@ -183,13 +191,14 @@ export default {
   }
 
   & #{&}__input {
-    border: 1px solid var(--gray-30);
+    border: 1px solid $gray-30;
     width: 100%;
-    background-color: var(--white);
+    background-color: $white;
     -webkit-appearance: none;
     appearance: none;
     border-radius: 0;
     padding: 0.5em 1.75em 0.5em 3em;
+    outline: 0;
 
     &::placeholder {
       text-align: center;
@@ -198,9 +207,9 @@ export default {
 
   & #{&}__submit {
     border: 0;
-    border-right: 1px solid var(--gray-30);
+    border-right: 1px solid $gray-30;
     appearance: none;
-    background-color: var(--white);
+    background-color: $white;
     width: 2.5em;
     padding: 0.1em 0.5em;
     margin: 0.5em -1px 0.5em 0;
@@ -217,7 +226,7 @@ export default {
   }
 
   & #{&}__clear-button {
-    background-color: var(--white);
+    background-color: $white;
     position: absolute;
     border: 0;
     top: 3px;
@@ -228,7 +237,7 @@ export default {
     line-height: 1;
 
     &:hover {
-      color: var(--blue-60);
+      color: $blue-60;
     }
 
     @media (min-width: 57.5em) {
@@ -239,54 +248,55 @@ export default {
   &--small {
     padding: 1em;
     max-width: none;
-    background: var(--white);
+    background: $white;
     margin-bottom: 1em;
     position: fixed;
     left: 0;
     right: 0;
     top: 5em;
-    z-index: var(--layerTopBar);
-    box-shadow: var(--shadowCard);
+    z-index: $layerTopBar;
+    box-shadow: $shadowCard;
   }
 
   & #{&}__dropdown {
     position: absolute;
-    top: calc(100% - 1px);
-    left: 2px;
-    right: 2px;
-    background: var(--white);
-    border-bottom: 1px solid var(--gray-30);
-    border-left: 1px solid var(--gray-30);
-    border-right: 1px solid var(--gray-30);
-    border-top: 1px solid var(--white);
+    top: calc(100% - 2px);
+    left: 0;
+    right: 0;
+    background: $white;
+    border-bottom: 1px solid $gray-30;
+    border-left: 1px solid $gray-30;
+    border-right: 1px solid $gray-30;
+    border-top: none;
 
     .dropdown-item {
       padding: 0.5em 1.75em 0.5em 3em;
       font-size: 1.15em;
 
       &:hover {
-        background: var(--gray-20);
+        background: $gray-20;
       }
       &.active {
-        background: var(--gray-20);
+        background: $gray-20;
       }
     }
   }
 
   &:focus,
-  &:hover {
+  &:hover,
+  &:focus-within {
     .search-bar__input {
-      border: 1px solid var(--blue-60);
+      border: 1px solid $blue-60;
     }
 
     button[type='submit'] {
-      border-right: 1px solid var(--blue-60);
+      border-right: 1px solid $blue-60;
     }
 
     .search-bar__dropdown {
-      border-bottom: 1px solid var(--blue-60);
-      border-left: 1px solid var(--blue-60);
-      border-right: 1px solid var(--blue-60);
+      border-bottom: 1px solid $blue-60;
+      border-left: 1px solid $blue-60;
+      border-right: 1px solid $blue-60;
     }
   }
 }

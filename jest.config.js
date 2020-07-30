@@ -5,15 +5,16 @@ module.exports = {
     'json',
     // tell Jest to handle `*.vue` files
     'vue',
+    'svg',
   ],
   transform: {
     // process `*.vue` files with `vue-jest`
     '.*\\.(vue)$': 'vue-jest',
-    '.*\\.svg$': '<rootDir>/src/test/mocks/fileMock.js',
+    '.*\\.svg$': '<rootDir>/src/test/mocks/svgTransform.js',
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '.*\\.svg$': '<rootDir>/src/test/mocks/fileMock.js',
+    '.*\\.svg$': './src/test/mocks/svgMock.js',
   },
   testMatch: ['**/*.spec.(js|jsx|ts|tsx)'],
 };

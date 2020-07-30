@@ -15,7 +15,7 @@ describe('FactorIcon', () => {
   });
 
   it('receives id', () => {
-    const testText = 'testid';
+    const testText = 'eye';
     const wrapper = mount(FactorIcon, {
       propsData: {
         id: testText,

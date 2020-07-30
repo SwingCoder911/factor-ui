@@ -1,57 +1,50 @@
 <template>
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    role="presentation"
-    focusable="false"
-    :width="width"
-    :height="height"
-    class="icon"
-    @click="handleIconClicked"
-  >
-    <template>
-      <!-- <component :is="iconPath" /> -->
-      <use :href="iconHref" />
-    </template>
-  </svg>
+  <div>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      style="position: absolute; width: 0; height: 0"
+      v-html="iconRendered"
+    ></svg>
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      role="presentation"
+      focusable="false"
+      :width="width"
+      :height="height"
+      class="icon"
+      @click="handleIconClicked"
+    >
+      <use :href="iconHref"></use>
+    </svg>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'FactorIcon',
   props: {
-    width: Number,
-    height: Number,
+    width: {
+      type: Number,
+      default: 16,
+    },
+    height: {
+      type: Number,
+      default: 16,
+    },
     id: String,
   },
   computed: {
-    // iconPath() {
-    //   console.log('found: ', require(`@/assets/svg/${this.id}.svg`));
-    //   return () => import(`@/assets/svg/${this.id}.svg`);
-    // },
-    // iconLoader() {
-    //   console.log(
-    //     'loading svg: ',
-    //     `svg-inline-loader?classPrefix=f-i__!@/assets/svg/${this.id}.svg`,
-    //   );
-    //   return require(`svg-inline-loader?classPrefix=f-i__!@/assets/svg/${this.id}.svg`);
-    // },
+    iconRendered() {
+      return this.source.default.stringify();
+    },
     iconHref() {
-      return `#${
-        require(`!svg-sprite-loader?extract=false!image-webpack-loader?${`{
-              svgo: {
-                plugins: [
-                  { removeXMLNS: true },
-                  {
-                    removeAttributesBySelector: {
-                      selector: 'svg[class]',
-                      attributes: 'class'
-                    }
-                  },
-                ]
-              }
-            }`.replace(/\n/g, '')}!@/assets/svg/${this.id}.svg`).default.id
-      }`;
+      return `#${this.source.default.id}`;
+    },
+
+    iconSource() {
+      return this.source.default.content;
     },
   },
   methods: {
@@ -62,12 +55,16 @@ export default {
   data() {
     return {
       avatarUrl: null,
+      source: require(`@/assets/svg/${this.id}.svg`),
     };
   },
 };
 </script>
 
 <style lang="scss">
+@import '../../shared/styles/_base.scss';
+@import '../../shared/styles/_variables.scss';
+
 .icon {
   fill: currentColor;
 }

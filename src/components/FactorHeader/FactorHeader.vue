@@ -1,36 +1,38 @@
 <template>
-  <header class="f-header">
-    <div class="f-header__column">
-      <slot name="logo" v-if="!noLogo" />
-      <a class="f-header__logo-link" href="/" v-if="!hasLogoSlot && !noLogo">
-        <img
-          src="https://www.mozilla.org/media/protocol/img/logos/mozilla/black.svg"
-          class="f-header__logo"
-        />
-      </a>
-    </div>
-    <div class="f-header__column">
-      <FactorSearchBar
-        class="f-header__search"
-        :searchBarHandler="searchBarHandler"
-        :searchBarLabel="searchBarLabel"
-        :searchBarValue="searchBarValue"
-        :searchBarDropdown="searchBarSuggestions"
-        @keyup="searchBarKeyup"
-        v-on:search-bar-dropdown-clicked="searchBarDropdownClicked"
-        v-on:clear-query="searchBarClearQuery"
-        v-if="!hideSearchBar"
-      />
-    </div>
-    <div class="f-header__column">
-      <nav class="f-nav">
-        <slot name="nav" />
-      </nav>
-      <div class="f-profile">
-        <slot name="profile" />
+  <div>
+    <slot name="styles" />
+    <header class="f-header">
+      <div class="f-header__column">
+        <slot name="logo" v-if="!noLogo" />
+        <a class="f-header__logo-link" href="/" v-if="!hasLogoSlot && !noLogo">
+          <img
+            src="https://www.mozilla.org/media/protocol/img/logos/mozilla/black.svg"
+            class="f-header__logo"
+          />
+        </a>
       </div>
-    </div>
-  </header>
+      <div class="f-header__column">
+        <FactorSearchBar
+          class="f-header__search"
+          v-if="!hideSearchBar"
+          :searchBarLabel="searchBarLabelDisplay"
+          :searchBarValue="searchBarValueDisplay"
+          @factor:search:keyup="factorSearchKeyup"
+          @factor:search:submitted="factorSearchSubmitted"
+          @factor:search:clear="factorSearchClear"
+          @factor:search-suggestions:clicked="factorSearchSuggestionsClicked"
+        />
+      </div>
+      <div class="f-header__column">
+        <nav class="f-nav">
+          <slot name="nav" />
+        </nav>
+        <div class="f-profile">
+          <slot name="profile" />
+        </div>
+      </div>
+    </header>
+  </div>
 </template>
 <script>
 import FactorSearchBar from '@/components/FactorSearchBar';
@@ -43,9 +45,13 @@ export default {
       type: Boolean,
       default: false,
     },
-    searchBarConfig: {
-      type: Object,
-      default: null,
+    searchBarLabel: {
+      type: String,
+      default: '',
+    },
+    searchBarValue: {
+      type: String,
+      default: '',
     },
     noLogo: {
       type: Boolean,
@@ -53,64 +59,49 @@ export default {
     },
   },
   methods: {
-    searchBarHandler(value) {
-      if (!this.searchBarConfig.handler) {
-        return;
-      }
-      this.searchBarConfig.handler(value);
+    factorSearchSubmitted(queryObject) {
+      this.$emit('factor:search:submitted', queryObject);
     },
-    searchBarKeyup(e) {
-      if (!this.searchBarConfig.onKeyUp) {
-        return;
-      }
-      this.searchBarConfig.onKeyUp(e);
+    factorSearchKeyup({ event, updateSuggestions }) {
+      this.$emit('factor:search:keyup', { updateSuggestions, event });
     },
-    searchBarDropdownClicked(item) {
-      if (!this.searchBarConfig.onDropdownClicked) {
-        return;
-      }
-      this.searchBarConfig.onDropdownClicked(item);
+    factorSearchSuggestionsClicked(item) {
+      this.$emit('factor:search-suggestions:clicked', { item });
     },
-    searchBarClearQuery() {
-      if (!this.searchBarConfig.onClearQuery) {
-        return;
-      }
-      this.searchBarConfig.onClearQuery();
+    factorSearchClear() {
+      this.$emit('factor:search:clear');
     },
   },
   computed: {
     hasLogoSlot() {
       return !!this.$slots['logo'];
     },
-    searchBarLabel() {
-      if (!this.searchBarConfig.label) {
+    searchBarLabelDisplay() {
+      if (!this.searchBarLabel) {
         return '';
       }
-      return this.searchBarConfig.label;
+      return this.searchBarLabel;
     },
-    searchBarValue() {
-      if (!this.searchBarConfig.value) {
+    searchBarValueDisplay() {
+      if (!this.searchBarValue) {
         return '';
       }
-      return this.searchBarConfig.value;
-    },
-    searchBarSuggestions() {
-      if (!this.searchBarConfig.suggestions) {
-        return [];
-      }
-      return this.searchBarConfig.suggestions;
+      return this.searchBarValue;
     },
   },
 };
 </script>
 <style lang="scss">
+@import '../../shared/styles/_base.scss';
+@import '../../shared/styles/_variables.scss';
+
 .f-header {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 5em;
-  background-color: var(--white);
-  border-bottom: 1px solid var(--gray-30);
+  background-color: $white;
+  border-bottom: 1px solid $gray-30;
 
   & #{&}__column {
     &:first-child {

@@ -1,7 +1,6 @@
-import { searchBarConfig } from './templatePropsMocks';
-
 module.exports = {
+  searchBarValue: 'searchBarValue',
+  searchBarLabel: 'searchBarLabel',
   hideSearchBar: false,
   noLogo: false,
-  searchBarConfig,
 };

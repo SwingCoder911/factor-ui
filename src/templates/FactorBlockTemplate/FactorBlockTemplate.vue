@@ -1,6 +1,13 @@
 <template>
   <div id="factor-template" class="f-template-outer block-template">
-    <FactorHeader :searchBarConfig="searchBarConfig">
+    <FactorHeader
+      :searchBarLabel="searchBarLabel"
+      :searchBarValue="searchBarValue"
+      @factor:search:keyup="factorSearchKeyup"
+      @factor:search:submitted="factorSearchSubmitted"
+      @factor:search:clear="factorSearchClear"
+      @factor:search-suggestions:clicked="factorSearchSuggestionsClicked"
+    >
       <template slot="logo" v-if="hasLogo">
         <slot name="logo" />
       </template>
@@ -32,9 +39,27 @@ export default {
     FactorFooter,
   },
   props: {
-    searchBarConfig: {
-      type: Object,
-      default: null,
+    searchBarLabel: {
+      type: String,
+      default: '',
+    },
+    searchBarValue: {
+      type: String,
+      default: '',
+    },
+  },
+  methods: {
+    factorSearchSubmitted(value) {
+      this.$emit('factor:search:submitted', { search: value });
+    },
+    factorSearchKeyup({ event, updateSuggestions }) {
+      this.$emit('factor:search:keyup', { updateSuggestions, event });
+    },
+    factorSearchSuggestionsClicked(item) {
+      this.$emit('factor:search-suggestions:clicked', { item });
+    },
+    factorSearchClear() {
+      this.$emit('factor:search:clear');
     },
   },
   computed: {
