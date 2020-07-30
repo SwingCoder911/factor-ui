@@ -125,7 +125,6 @@ export default {
     },
     handleKeyUp(e) {
       const updateSuggestions = (suggestions) => {
-        console.log('received suggestions: ', suggestions);
         this.dropdownItems = suggestions;
       };
       if (e.keyCode !== 13) {

@@ -25,8 +25,14 @@
 export default {
   name: 'FactorIcon',
   props: {
-    width: Number,
-    height: Number,
+    width: {
+      type: Number,
+      default: 16,
+    },
+    height: {
+      type: Number,
+      default: 16,
+    },
     id: String,
   },
   computed: {
